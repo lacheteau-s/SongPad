@@ -1,4 +1,5 @@
 ﻿using SimpleInjector;
+using SongPad.Tools;
 using SongPad.ViewModels;
 using SongPad.Views;
 using System;
@@ -14,29 +15,22 @@ namespace SongPad
 		[STAThread]
 		static void Main()
 		{
-			var container = Bootstrap();
-
-			RunApplication(container);
+			RegisterIoC();
+			RunApplication();
 		}
 
-		private static Container Bootstrap()
+		private static void RegisterIoC()
 		{
-			var container = new Container();
-
-			container.Register<MainWindow>();
-			container.Register<MainWindowViewModel>();
-
-			container.Verify();
-
-			return container;
+			IoC.Register<MainWindow>();
+			IoC.Register<MainWindowViewModel>();
 		}
 
-		private static void RunApplication(Container container)
+		private static void RunApplication()
 		{
 			try
 			{
 				var app = new App();
-				var window = container.GetInstance<MainWindow>();
+				var window = IoC.GetInstance<MainWindow>();
 
 				app.Run(window);
 			}
