@@ -61,8 +61,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Program.cs" />
+    <Compile Include="Tools\Command.cs" />
     <Compile Include="Tools\IoC.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
