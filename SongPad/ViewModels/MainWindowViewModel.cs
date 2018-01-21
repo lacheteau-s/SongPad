@@ -1,15 +1,34 @@
 ﻿using SongPad.Tools;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SongPad.ViewModels
 {
-	public class MainWindowViewModel
+	public class MainWindowViewModel : INotifyPropertyChanged
 	{
 		public MenuViewModel MenuViewModel { get; private set; }
+
+		private ProjectViewModel _projectViewModel;
+
+		public ProjectViewModel ProjectViewModel
+		{
+			get
+			{
+				return _projectViewModel;
+			}
+			private set
+			{
+				_projectViewModel = value;
+				RaisePropertyChanged(nameof(ProjectViewModel));
+			}
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
 
 		public MainWindowViewModel()
 		{
@@ -35,7 +54,8 @@ namespace SongPad.ViewModels
 
 		private void OnMenuNew(object sender, EventArgs e)
 		{
-			throw new NotImplementedException();
+			// Check if another project is currently opened with unsaved changes
+			ProjectViewModel = IoC.GetInstance<ProjectViewModel>();
 		}
 
 		private void OnMenuOpen(object sender, EventArgs e)
@@ -51,6 +71,11 @@ namespace SongPad.ViewModels
 		private void OnMenuQuit(object sender, EventArgs e)
 		{
 			throw new NotImplementedException();
+		}
+
+		protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }
