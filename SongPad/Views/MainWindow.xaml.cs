@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 namespace SongPad.Views
 {
@@ -20,11 +21,27 @@ namespace SongPad.Views
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		public MainWindowViewModel ViewModel => (MainWindowViewModel)DataContext;
+
 		public MainWindow(MainWindowViewModel viewModel)
 		{
-			InitializeComponent();
+			DataContext = viewModel;
 
-			base.DataContext = viewModel;
+			InitializeComponent();
+		}
+
+		protected override void OnInitialized(EventArgs e)
+		{
+			base.OnInitialized(e);
+
+			ViewModel.Initialize();
+		}
+
+		protected override void OnClosing(CancelEventArgs e)
+		{
+			base.OnClosing(e);
+
+			ViewModel.Shutdown();
 		}
 	}
 }

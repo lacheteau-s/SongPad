@@ -6,8 +6,18 @@
         xmlns:local="clr-namespace:SongPad.Views"
         mc:Ignorable="d"
 		WindowState="Maximized"
-        Title="MainWindow" Height="300" Width="300">
+        Title="MainWindow" Height="1920" Width="1080">
     <Grid>
-        
+		<DockPanel>
+			<Menu DockPanel.Dock="Top" DataContext="{Binding MenuViewModel}">
+				<MenuItem Header="_File">
+					<MenuItem Header="_New" Command="{Binding NewCommand}"/>
+					<MenuItem Header="_Open" Command="{Binding OpenCommand}"/>
+					<MenuItem Header="_Save" Command="{Binding SaveCommand}"/>
+					<Separator />
+					<MenuItem Header="_Quit" Command="{Binding QuitCommand}"/>
+				</MenuItem>
+			</Menu>
+		</DockPanel>
     </Grid>
 </Window>

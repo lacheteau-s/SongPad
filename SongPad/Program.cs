@@ -23,6 +23,8 @@ namespace SongPad
 		{
 			IoC.Register<MainWindow>();
 			IoC.Register<MainWindowViewModel>();
+
+			IoC.Register<MenuViewModel>();
 		}
 
 		private static void RunApplication()
