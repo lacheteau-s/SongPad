@@ -1,4 +1,5 @@
-﻿using SongPad.Tools;
+﻿using SongPad.Services;
+using SongPad.Tools;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,6 +12,8 @@ namespace SongPad.ViewModels
 {
 	public class MainWindowViewModel : INotifyPropertyChanged
 	{
+		private IDialogService _dialogService;
+
 		public MenuViewModel MenuViewModel { get; private set; }
 
 		private ProjectViewModel _projectViewModel;
@@ -32,6 +35,8 @@ namespace SongPad.ViewModels
 
 		public MainWindowViewModel()
 		{
+			_dialogService = IoC.GetInstance<IDialogService>(); // TODO: ViewModel locator to allow passing the service in ctor
+
 			MenuViewModel = IoC.GetInstance<MenuViewModel>();
 		}
 
@@ -54,6 +59,8 @@ namespace SongPad.ViewModels
 
 		private void OnMenuNew(object sender, EventArgs e)
 		{
+			_dialogService.ShowDialog<NewProjectDialogViewModel>();
+
 			// Check if another project is currently opened with unsaved changes
 			ProjectViewModel = IoC.GetInstance<ProjectViewModel>();
 		}
