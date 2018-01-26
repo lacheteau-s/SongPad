@@ -1,4 +1,5 @@
-﻿using SongPad.ViewModels;
+﻿using SongPad.Messages;
+using SongPad.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace SongPad.Services
 {
 	public interface IDialogService
 	{
-		void ShowDialog<T>() where T : DialogViewModelBase;
+		IDialogResult ShowDialog<T>() where T : DialogViewModelBase;
 	}
 }

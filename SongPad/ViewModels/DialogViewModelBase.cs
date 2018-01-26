@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SongPad.Messages;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,5 +12,14 @@ namespace SongPad.ViewModels
 	public class DialogViewModelBase
 	{
 		public string Title { get; protected set; }
+
+		public IDialogResult Result { get; protected set; }
+
+		public event EventHandler Close;
+
+		protected void RaiseClose()
+		{
+			Close?.Invoke(this, EventArgs.Empty);
+		}
 	}
 }

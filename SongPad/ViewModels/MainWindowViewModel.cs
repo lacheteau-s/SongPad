@@ -59,7 +59,7 @@ namespace SongPad.ViewModels
 
 		private void OnMenuNew(object sender, EventArgs e)
 		{
-			_dialogService.ShowDialog<NewProjectDialogViewModel>();
+			var result = _dialogService.ShowDialog<NewProjectDialogViewModel>();
 
 			// Check if another project is currently opened with unsaved changes
 			ProjectViewModel = IoC.GetInstance<ProjectViewModel>();

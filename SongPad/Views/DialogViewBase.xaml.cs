@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SongPad.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,27 @@ namespace SongPad.Views
 	/// </summary>
 	public partial class DialogViewBase : Window
 	{
+		public DialogViewModelBase ViewModel => (DialogViewModelBase)DataContext;
+
 		public DialogViewBase()
 		{
 			InitializeComponent();
+		}
+
+		public void SubscribeEvents()
+		{
+			ViewModel.Close += OnClose;
+		}
+
+		public void UnsubscribeEvents()
+		{
+			ViewModel.Close -= OnClose;
+		}
+
+		private void OnClose(object sender, EventArgs e)
+		{
+			UnsubscribeEvents();
+			DialogResult = true;
 		}
 	}
 }
