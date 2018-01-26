@@ -9,13 +9,11 @@
 		xmlns:viewmodels="clr-namespace:SongPad.ViewModels"
         mc:Ignorable="d"
 		WindowState="Maximized"
+		DataContext="{StaticResource ResourceKey=MainWindowViewModel}"
         Title="MainWindow" Height="1920" Width="1080">
 	<Window.Resources>
 		<converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 	</Window.Resources>
-	<Window.DataContext>
-		<viewmodels:MainWindowViewModel />
-	</Window.DataContext>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
