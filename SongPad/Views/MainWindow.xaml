@@ -6,12 +6,16 @@
         xmlns:local="clr-namespace:SongPad.Views"
 		xmlns:converters="clr-namespace:SongPad.Converters"
 		xmlns:views="clr-namespace:SongPad.Views"
+		xmlns:viewmodels="clr-namespace:SongPad.ViewModels"
         mc:Ignorable="d"
 		WindowState="Maximized"
         Title="MainWindow" Height="1920" Width="1080">
 	<Window.Resources>
 		<converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 	</Window.Resources>
+	<Window.DataContext>
+		<viewmodels:MainWindowViewModel />
+	</Window.DataContext>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />

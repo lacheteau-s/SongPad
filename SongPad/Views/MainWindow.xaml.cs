@@ -23,10 +23,8 @@ namespace SongPad.Views
 	{
 		public MainWindowViewModel ViewModel => (MainWindowViewModel)DataContext;
 
-		public MainWindow(MainWindowViewModel viewModel)
+		public MainWindow()
 		{
-			DataContext = viewModel;
-
 			InitializeComponent();
 		}
 
