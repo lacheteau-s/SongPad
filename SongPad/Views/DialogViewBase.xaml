@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SongPad.Views"
         mc:Ignorable="d"
-        Title="DialogViewBase"
+        Title="{Binding Title}"
 		Height="300" Width="300"
-		WindowStartupLocation="CenterScreen">
-    <ContentPresenter x:Name="ContentPresenter" Content="{Binding}">
-        
-    </ContentPresenter>
+		WindowStartupLocation="CenterScreen"
+		SizeToContent="WidthAndHeight"
+		ResizeMode="NoResize">
+	<ContentPresenter x:Name="ContentPresenter" Content="{Binding}" />
 </Window>

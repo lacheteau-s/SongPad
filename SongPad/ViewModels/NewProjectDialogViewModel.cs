@@ -8,5 +8,9 @@ namespace SongPad.ViewModels
 {
 	public class NewProjectDialogViewModel : DialogViewModelBase
 	{
+		public NewProjectDialogViewModel()
+		{
+			Title = "New project";
+		}
 	}
 }

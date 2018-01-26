@@ -2,8 +2,12 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:SongPad"
+			 xmlns:views="clr-namespace:SongPad.Views"
 			 xmlns:viewmodels="clr-namespace:SongPad.ViewModels">
     <Application.Resources>
 		<viewmodels:MainWindowViewModel x:Key="MainWindowViewModel" />
+		<DataTemplate DataType="{x:Type viewmodels:NewProjectDialogViewModel}">
+			<views:NewProjectDialogView />
+		</DataTemplate>
 	</Application.Resources>
 </Application>
