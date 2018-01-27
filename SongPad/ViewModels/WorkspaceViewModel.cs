@@ -27,6 +27,8 @@ namespace SongPad.ViewModels
 			}
 		}
 
+		public bool HasItems => Projects.Count > 0;
+
 		public event PropertyChangedEventHandler PropertyChanged;
 		public event EventHandler SelectionChanged;
 
@@ -47,6 +49,7 @@ namespace SongPad.ViewModels
 
 			Projects.Add(project);
 			SelectedProject = project;
+			RaisePropertyChanged(nameof(HasItems));
 		}
 
 		private void RaisePropertyChanged([CallerMemberName] string propertyName = null)

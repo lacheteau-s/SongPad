@@ -3,8 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:SongPad"
 			 xmlns:views="clr-namespace:SongPad.Views"
-			 xmlns:viewmodels="clr-namespace:SongPad.ViewModels">
+			 xmlns:viewmodels="clr-namespace:SongPad.ViewModels"
+			 xmlns:converters="clr-namespace:SongPad.Converters">
     <Application.Resources>
+		<converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 		<viewmodels:MainWindowViewModel x:Key="MainWindowViewModel" />
 		<DataTemplate DataType="{x:Type viewmodels:NewProjectDialogViewModel}">
 			<views:NewProjectDialogView />
