@@ -10,7 +10,7 @@
 			 d:DataContext="{d:DesignInstance viewmodels:WorkspaceViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
 	<Grid>
-		<TabControl ItemsSource="{Binding Projects}">
+		<TabControl ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}">
 			<TabControl.ItemTemplate>
 				<DataTemplate>
 					<StackPanel Orientation="Horizontal">

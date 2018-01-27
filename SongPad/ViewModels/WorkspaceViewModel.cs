@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SongPad.Tools;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -11,14 +12,34 @@ namespace SongPad.ViewModels
 {
 	public class WorkspaceViewModel : INotifyPropertyChanged
 	{
+		private ProjectViewModel _selectedProject;
+
 		public ObservableCollection<ProjectViewModel> Projects { get; set; }
+
+		public ProjectViewModel SelectedProject
+		{
+			get { return _selectedProject; }
+			set
+			{
+				_selectedProject = value;
+				RaisePropertyChanged(nameof(SelectedProject));
+			}
+		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		public WorkspaceViewModel()
 		{
 			Projects = new ObservableCollection<ProjectViewModel>();
-			Projects.Add(new ProjectViewModel { Title = "Toast" });
+		}
+
+		public void AddProject(string title)
+		{
+			var project = IoC.GetInstance<ProjectViewModel>();
+			project.Title = title;
+
+			Projects.Add(project);
+			SelectedProject = project;
 		}
 
 		private void RaisePropertyChanged([CallerMemberName] string propertyName = null)

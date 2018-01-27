@@ -1,4 +1,5 @@
-﻿using SongPad.Services;
+﻿using SongPad.Messages;
+using SongPad.Services;
 using SongPad.Tools;
 using System;
 using System.Collections.Generic;
@@ -47,8 +48,10 @@ namespace SongPad.ViewModels
 
 		private void OnMenuNew(object sender, EventArgs e)
 		{
-			var result = _dialogService.ShowDialog<NewProjectDialogViewModel>();
+			var result = _dialogService.ShowDialog<NewProjectDialogViewModel>() as NewProjectDialogResult;
 
+			if (result != null)
+				WorkspaceViewModel.AddProject(result.ProjectTitle);
 			// Add new project to workspace
 		}
 
