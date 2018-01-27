@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace SongPad.ViewModels
 {
@@ -27,10 +28,16 @@ namespace SongPad.ViewModels
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
+		public event EventHandler SelectionChanged;
 
 		public WorkspaceViewModel()
 		{
 			Projects = new ObservableCollection<ProjectViewModel>();
+		}
+
+		public void Initialize()
+		{
+			PropertyChanged += OnPropertyChanged; // TODO : Unsubscribe
 		}
 
 		public void AddProject(string title)
@@ -45,6 +52,12 @@ namespace SongPad.ViewModels
 		private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == nameof(SelectedProject))
+				SelectionChanged?.Invoke(this, EventArgs.Empty);
 		}
 	}
 }
