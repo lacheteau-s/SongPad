@@ -11,6 +11,8 @@ namespace SongPad.ViewModels
 {
 	public class NewProjectDialogViewModel : DialogViewModelBase
 	{
+		private string _defaultProjectName => "Untitled";
+
 		public string ProjectName { get; set; }
 
 		public ICommand OkCommand => new Command(OnOk);
@@ -18,10 +20,14 @@ namespace SongPad.ViewModels
 		public NewProjectDialogViewModel()
 		{
 			Title = "New project";
+			ProjectName = _defaultProjectName;
 		}
 
 		private void OnOk()
 		{
+			if (string.IsNullOrWhiteSpace(ProjectName))
+				ProjectName = _defaultProjectName;
+
 			Result = new NewProjectDialogResult(ProjectName);
 			RaiseClose();
 		}
