@@ -33,9 +33,7 @@
 		
 		<!-- Content area -->
 		<Grid Grid.Row="1">
-			<Grid Visibility="{Binding ProjectViewModel, Converter={StaticResource NullToVisibilityConverter}}">
-				<views:ProjectView DataContext="{Binding ProjectViewModel}" />
-			</Grid>
+			<views:WorkspaceView DataContext="{Binding WorkspaceViewModel}" />
 		</Grid>
     </Grid>
 </Window>

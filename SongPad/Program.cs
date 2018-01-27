@@ -27,6 +27,8 @@ namespace SongPad
 
 			IoC.Register<MenuViewModel>();
 
+			IoC.Register<WorkspaceViewModel>();
+
 			IoC.Register<ProjectViewModel>();
 
 			IoC.Register<NewProjectDialogViewModel>();

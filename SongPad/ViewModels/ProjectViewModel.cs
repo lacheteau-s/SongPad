@@ -9,5 +9,6 @@ namespace SongPad.ViewModels
 {
 	public class ProjectViewModel
 	{
+		public string Title { get; set; }
 	}
 }

@@ -16,20 +16,7 @@ namespace SongPad.ViewModels
 
 		public MenuViewModel MenuViewModel { get; private set; }
 
-		private ProjectViewModel _projectViewModel;
-
-		public ProjectViewModel ProjectViewModel
-		{
-			get
-			{
-				return _projectViewModel;
-			}
-			private set
-			{
-				_projectViewModel = value;
-				RaisePropertyChanged(nameof(ProjectViewModel));
-			}
-		}
+		public WorkspaceViewModel WorkspaceViewModel { get; private set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -38,6 +25,7 @@ namespace SongPad.ViewModels
 			_dialogService = IoC.GetInstance<IDialogService>(); // TODO: ViewModel locator to allow passing the service in ctor
 
 			MenuViewModel = IoC.GetInstance<MenuViewModel>();
+			WorkspaceViewModel = IoC.GetInstance<WorkspaceViewModel>();
 		}
 
 		public void Initialize()
@@ -61,8 +49,7 @@ namespace SongPad.ViewModels
 		{
 			var result = _dialogService.ShowDialog<NewProjectDialogViewModel>();
 
-			// Check if another project is currently opened with unsaved changes
-			ProjectViewModel = IoC.GetInstance<ProjectViewModel>();
+			// Add new project to workspace
 		}
 
 		private void OnMenuOpen(object sender, EventArgs e)
