@@ -11,35 +11,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.ComponentModel;
 
 namespace SongPad.Views
 {
 	/// <summary>
-	/// Interaction logic for MainWindow.xaml
+	/// Interaction logic for ProjectView.xaml
 	/// </summary>
-	public partial class MainWindow : Window
+	public partial class ProjectView : UserControl
 	{
-		public MainWindowViewModel ViewModel => (MainWindowViewModel)DataContext;
-
-		public MainWindow()
+		public ProjectView()
 		{
 			InitializeComponent();
-		}
-
-		protected override void OnInitialized(EventArgs e)
-		{
-			base.OnInitialized(e);
-
-			ViewModel.Initialize();
-		}
-
-		protected override void OnClosing(CancelEventArgs e)
-		{
-			base.OnClosing(e);
-
-			ViewModel.Shutdown();
 		}
 	}
 }

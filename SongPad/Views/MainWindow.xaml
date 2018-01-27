@@ -4,11 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SongPad.Views"
+		xmlns:converters="clr-namespace:SongPad.Converters"
+		xmlns:views="clr-namespace:SongPad.Views"
+		xmlns:viewmodels="clr-namespace:SongPad.ViewModels"
         mc:Ignorable="d"
 		WindowState="Maximized"
-        Title="MainWindow" Height="1920" Width="1080">
-    <Grid>
-		<DockPanel>
+		DataContext="{StaticResource ResourceKey=MainWindowViewModel}"
+        Title="{Binding Title}" Height="1920" Width="1080">
+	<Window.Resources>
+		<converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+	</Window.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<DockPanel Grid.Row="0">
 			<Menu DockPanel.Dock="Top" DataContext="{Binding MenuViewModel}">
 				<MenuItem Header="_File">
 					<MenuItem Header="_New" Command="{Binding NewCommand}"/>
@@ -19,5 +30,10 @@
 				</MenuItem>
 			</Menu>
 		</DockPanel>
+		
+		<!-- Content area -->
+		<Grid Grid.Row="1">
+			<views:WorkspaceView DataContext="{Binding WorkspaceViewModel}" Visibility="{Binding HasItems, Converter={StaticResource BooleanToVisibilityConverter}}" />
+		</Grid>
     </Grid>
 </Window>

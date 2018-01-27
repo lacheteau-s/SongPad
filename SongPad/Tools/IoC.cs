@@ -38,6 +38,11 @@ namespace SongPad.Tools
 			IoCContainer.Register<T>();
 		}
 
+		public static void Register<TInterface, TImplementation>() where TInterface : class where TImplementation : class, TInterface
+		{
+			IoCContainer.Register<TInterface, TImplementation>();
+		}
+
 		public static T GetInstance<T>(bool throwIfUnregistered = true) where T : class
 		{
 			if (throwIfUnregistered)

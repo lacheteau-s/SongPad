@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="SongPad.Views.WorkspaceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SongPad.Views"
+			 xmlns:viewmodels="clr-namespace:SongPad.ViewModels"
+			 xmlns:views="clr-namespace:SongPad.Views"
+             mc:Ignorable="d" 
+			 d:DataContext="{d:DesignInstance viewmodels:WorkspaceViewModel}"
+             d:DesignHeight="300" d:DesignWidth="300">
+	<Grid>
+		<TabControl ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject, Mode=TwoWay}">
+			<TabControl.ItemTemplate>
+				<DataTemplate>
+					<StackPanel Orientation="Horizontal">
+						<Label Content="{Binding Title}" />
+						<Button Content="X" />
+					</StackPanel>
+				</DataTemplate>
+			</TabControl.ItemTemplate>
+			<TabControl.ContentTemplate>
+				<DataTemplate>
+					<views:ProjectView DataContext="{Binding}" />
+				</DataTemplate>
+			</TabControl.ContentTemplate>
+		</TabControl>
+	</Grid>
+</UserControl>

@@ -1,8 +1,15 @@
 ﻿<Application x:Class="SongPad.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:SongPad">
+             xmlns:local="clr-namespace:SongPad"
+			 xmlns:views="clr-namespace:SongPad.Views"
+			 xmlns:viewmodels="clr-namespace:SongPad.ViewModels"
+			 xmlns:converters="clr-namespace:SongPad.Converters">
     <Application.Resources>
-         
-    </Application.Resources>
+		<converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+		<viewmodels:MainWindowViewModel x:Key="MainWindowViewModel" />
+		<DataTemplate DataType="{x:Type viewmodels:NewProjectDialogViewModel}">
+			<views:NewProjectDialogView />
+		</DataTemplate>
+	</Application.Resources>
 </Application>

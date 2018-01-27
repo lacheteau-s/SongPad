@@ -12,34 +12,35 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.ComponentModel;
 
 namespace SongPad.Views
 {
 	/// <summary>
-	/// Interaction logic for MainWindow.xaml
+	/// Interaction logic for DialogViewBase.xaml
 	/// </summary>
-	public partial class MainWindow : Window
+	public partial class DialogViewBase : Window
 	{
-		public MainWindowViewModel ViewModel => (MainWindowViewModel)DataContext;
+		public DialogViewModelBase ViewModel => (DialogViewModelBase)DataContext;
 
-		public MainWindow()
+		public DialogViewBase()
 		{
 			InitializeComponent();
 		}
 
-		protected override void OnInitialized(EventArgs e)
+		public void SubscribeEvents()
 		{
-			base.OnInitialized(e);
-
-			ViewModel.Initialize();
+			ViewModel.Close += OnClose;
 		}
 
-		protected override void OnClosing(CancelEventArgs e)
+		public void UnsubscribeEvents()
 		{
-			base.OnClosing(e);
+			ViewModel.Close -= OnClose;
+		}
 
-			ViewModel.Shutdown();
+		private void OnClose(object sender, EventArgs e)
+		{
+			UnsubscribeEvents();
+			DialogResult = true;
 		}
 	}
 }

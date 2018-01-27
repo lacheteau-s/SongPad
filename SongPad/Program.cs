@@ -1,4 +1,5 @@
 ﻿using SimpleInjector;
+using SongPad.Services;
 using SongPad.Tools;
 using SongPad.ViewModels;
 using SongPad.Views;
@@ -25,6 +26,14 @@ namespace SongPad
 			IoC.Register<MainWindowViewModel>();
 
 			IoC.Register<MenuViewModel>();
+
+			IoC.Register<WorkspaceViewModel>();
+
+			IoC.Register<ProjectViewModel>();
+
+			IoC.Register<NewProjectDialogViewModel>();
+
+			IoC.Register<IDialogService, DialogService>();
 		}
 
 		private static void RunApplication()
