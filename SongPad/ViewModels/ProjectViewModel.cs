@@ -10,5 +10,13 @@ namespace SongPad.ViewModels
 	public class ProjectViewModel
 	{
 		public string Title { get; set; }
+
+		public ObservableCollection<CardViewModel> Cards { get; set; }
+
+		public ProjectViewModel()
+		{
+			Cards = new ObservableCollection<CardViewModel>();
+			Cards.Add(new CardViewModel());  
+		}
 	}
 }
