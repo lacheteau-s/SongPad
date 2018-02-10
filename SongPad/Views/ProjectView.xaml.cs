@@ -21,7 +21,7 @@ namespace SongPad.Views
 	/// </summary>
 	public partial class ProjectView : UserControl
 	{
-		private Rectangle _card;
+		private FrameworkElement _card;
 
 		private Point _offset;
 
@@ -34,7 +34,7 @@ namespace SongPad.Views
 		{
 			var pos = e.GetPosition(canvas);
 
-			_card = ((Rectangle)sender);
+			_card = ((FrameworkElement)sender);
 			// Get the offset between the mouse and the card's top-left corner to prevent the card from "jumping" to the cursor's position
 			_offset = new Point(pos.X - _card.Margin.Left, pos.Y - _card.Margin.Top);
 		}
