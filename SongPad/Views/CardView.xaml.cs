@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SongPad.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,23 @@ namespace SongPad.Views
 	/// </summary>
 	public partial class CardView : UserControl
 	{
+		public CardViewModel ViewModel => (CardViewModel)DataContext;
+
 		public CardView()
 		{
 			InitializeComponent();
+		}
+
+		private void OnHeaderDoubleClick(object sender, MouseButtonEventArgs e)
+		{
+			ViewModel.IsEditingTitle = true;
+			HeaderTextBox.Focus();
+		}
+
+		private void OnHeaderKeyUp(object sender, KeyEventArgs e)
+		{
+			if (e.Key == Key.Enter)
+				ViewModel.IsEditingTitle = false;
 		}
 	}
 }

@@ -8,7 +8,37 @@ using System.Threading.Tasks;
 
 namespace SongPad.ViewModels
 {
-    public class CardViewModel
+    public class CardViewModel : INotifyPropertyChanged
     {
+		private string _title;
+
+		public string Title
+		{
+			get { return _title; }
+			set
+			{
+				_title = value;
+				RaisePropertyChanged(nameof(Title));
+			}
+		}
+
+		private bool _isEditingTitle;
+
+		public bool IsEditingTitle
+		{
+			get { return _isEditingTitle; }
+			set
+			{
+				_isEditingTitle = value;
+				RaisePropertyChanged(nameof(IsEditingTitle));
+			}
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		public void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
 	}
 }

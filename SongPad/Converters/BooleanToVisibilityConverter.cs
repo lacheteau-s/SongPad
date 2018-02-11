@@ -13,6 +13,8 @@ namespace SongPad.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
+			value = ((string)parameter == bool.TrueString) ? !(bool)value : (bool)value;
+
 			return (bool)value ? Visibility.Visible : Visibility.Hidden;
 		}
 
