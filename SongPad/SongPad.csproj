@@ -98,6 +98,10 @@
     <Compile Include="Views\ProjectView.xaml.cs">
       <DependentUpon>ProjectView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Resources\Templates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CardView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
