@@ -40,7 +40,7 @@
 					</TextBox>
 				</Grid>
 			</Label>
-			<Button Grid.Column="1" Margin="0,5" Template="{StaticResource ImageButton}">
+			<Button Grid.Column="1" Margin="0,5" Command="{Binding AddCommand}" Template="{StaticResource ImageButton}">
 				<Canvas Width="16" Height="16" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
 					<Path Stretch="Fill" Width="14" Height="14" Canvas.Left="1" Canvas.Top="1" Fill="#FFFFFFFF" Data="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z "/>
 				</Canvas>
@@ -56,6 +56,19 @@
 				</Canvas>
 			</Button>
 		</Grid>
-		<Canvas Background="White" Grid.Row="1" Margin="5,0,5,5" />
+		<ScrollViewer Grid.Row="1" Margin="5,0,5,5" Background="White" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+			<ItemsControl ItemsSource="{Binding Lines}">
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<StackPanel IsItemsHost="True" Orientation="Vertical" />
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<TextBox Text="{Binding Mode=OneWay}" TextWrapping="Wrap" AcceptsReturn="True" />
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</ScrollViewer>
 	</Grid>
 </UserControl>

@@ -1,6 +1,7 @@
 ﻿using SongPad.Tools;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -36,6 +37,9 @@ namespace SongPad.ViewModels
 			}
 		}
 
+		public ObservableCollection<string> Lines { get; set; }
+
+		public ICommand AddCommand => new Command(OnAdd);
 		public ICommand RemoveCommand => new Command(OnRemove);
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -44,10 +48,17 @@ namespace SongPad.ViewModels
 		public CardViewModel()
 		{
 			Title = "Untitled";
+			Lines = new ObservableCollection<string>();
+		}
+
+		private void OnAdd()
+		{
+			Lines.Add($"Lines {Lines.Count + 1}");
 		}
 
 		private void OnRemove()
 		{
+			// TODO : Clear lines
 			RemoveEventHandler?.Invoke(this, EventArgs.Empty);
 		}
 
