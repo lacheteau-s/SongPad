@@ -6,16 +6,17 @@
              xmlns:viewModels="clr-namespace:SongPad.ViewModels"
              mc:Ignorable="d"
 			 d:DataContext="{d:DesignInstance viewModels:CardViewModel}"
-             d:DesignHeight="300" d:DesignWidth="300" Background="Aqua">
+             d:DesignHeight="300" d:DesignWidth="300" Background="#535353">
     <Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="30" />
+			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 		<Label MouseDoubleClick="OnHeaderDoubleClick" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
 			<Grid>
 				<TextBlock Text="{Binding Title}"
 						   Visibility="{Binding IsEditingTitle, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"
-						   VerticalAlignment="Center" />
+						   VerticalAlignment="Center" Foreground="White" />
 				<TextBox x:Name="HeaderTextBox"
 						 Text="{Binding Title, Mode=TwoWay}"
 						 KeyUp="OnHeaderKeyUp"
@@ -24,5 +25,6 @@
 				</TextBox>
 			</Grid>
 		</Label>
+		<Canvas Background="White" Grid.Row="1" Margin="5,0,5,5" />
 	</Grid>
 </UserControl>

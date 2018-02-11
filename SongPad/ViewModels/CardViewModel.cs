@@ -36,6 +36,11 @@ namespace SongPad.ViewModels
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
+		public CardViewModel()
+		{
+			Title = "Untitled";
+		}
+
 		public void RaisePropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
