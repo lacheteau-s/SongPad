@@ -45,6 +45,7 @@ namespace SongPad.ViewModels
 		public void AddProject(string title)
 		{
 			var project = IoC.GetInstance<ProjectViewModel>();
+			project.Initialize();
 			project.Title = title;
 
 			Projects.Add(project);

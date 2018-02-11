@@ -1,10 +1,12 @@
-﻿using System;
+﻿using SongPad.Tools;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace SongPad.ViewModels
 {
@@ -34,14 +36,22 @@ namespace SongPad.ViewModels
 			}
 		}
 
+		public ICommand RemoveCommand => new Command(OnRemove);
+
 		public event PropertyChangedEventHandler PropertyChanged;
+		public event EventHandler RemoveEventHandler;
 
 		public CardViewModel()
 		{
 			Title = "Untitled";
 		}
 
-		public void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+		private void OnRemove()
+		{
+			RemoveEventHandler?.Invoke(this, EventArgs.Empty);
+		}
+
+		private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
