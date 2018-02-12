@@ -37,7 +37,7 @@ namespace SongPad.ViewModels
 			}
 		}
 
-		public ObservableCollection<string> Lines { get; set; }
+		public ObservableCollection<LineViewModel> Lines { get; set; }
 
 		public ICommand AddCommand => new Command(OnAdd);
 		public ICommand RemoveCommand => new Command(OnRemove);
@@ -48,12 +48,14 @@ namespace SongPad.ViewModels
 		public CardViewModel()
 		{
 			Title = "Untitled";
-			Lines = new ObservableCollection<string>();
+			Lines = new ObservableCollection<LineViewModel>();
 		}
 
 		private void OnAdd()
 		{
-			Lines.Add($"Lines {Lines.Count + 1}");
+			var line = IoC.GetInstance<LineViewModel>();
+			line.Line = $"Test {Lines.Count + 1}";
+			Lines.Add(line);
 		}
 
 		private void OnRemove()

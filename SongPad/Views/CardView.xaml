@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewModels="clr-namespace:SongPad.ViewModels"
+			 xmlns:controls="clr-namespace:SongPad.Resources.Controls"
              mc:Ignorable="d"
 			 d:DataContext="{d:DesignInstance viewModels:CardViewModel}"
              d:DesignHeight="300" d:DesignWidth="300" Background="#535353">
@@ -20,6 +21,7 @@
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 
+		<!-- HEADER -->
 		<Grid Grid.Row="0" Margin="5,0">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
@@ -56,6 +58,8 @@
 				</Canvas>
 			</Button>
 		</Grid>
+		
+		<!-- CONTENT -->
 		<ScrollViewer Grid.Row="1" Margin="5,0,5,5" Background="White" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
 			<ItemsControl ItemsSource="{Binding Lines}">
 				<ItemsControl.ItemsPanel>
@@ -65,7 +69,7 @@
 				</ItemsControl.ItemsPanel>
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
-						<TextBox Text="{Binding Mode=OneWay}" TextWrapping="Wrap" AcceptsReturn="True" />
+						<controls:EditableLabel Text="{Binding Line, Mode=TwoWay}" />
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
