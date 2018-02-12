@@ -39,5 +39,16 @@ namespace SongPad.Views
 			if (e.Key == Key.Enter)
 				ViewModel.IsEditingTitle = false;
 		}
+
+		private void OnListBoxKeyUp(object sender, KeyEventArgs e)
+		{
+			if (e.Key == Key.Delete)
+			{
+				var selection = listBox.SelectedItems.Cast<LineViewModel>().ToArray();
+
+				foreach (var item in selection)
+					ViewModel.Lines.Remove((LineViewModel)item);
+			}
+		}
 	}
 }

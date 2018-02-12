@@ -60,19 +60,17 @@
 		</Grid>
 		
 		<!-- CONTENT -->
-		<ScrollViewer Grid.Row="1" Margin="5,0,5,5" Background="White" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-			<ItemsControl ItemsSource="{Binding Lines}">
-				<ItemsControl.ItemsPanel>
-					<ItemsPanelTemplate>
-						<StackPanel IsItemsHost="True" Orientation="Vertical" />
-					</ItemsPanelTemplate>
-				</ItemsControl.ItemsPanel>
-				<ItemsControl.ItemTemplate>
-					<DataTemplate>
-						<controls:EditableLabel Text="{Binding Line, Mode=TwoWay}" />
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
-			</ItemsControl>
-		</ScrollViewer>
+		<ListBox x:Name="listBox" Grid.Row="1" ItemsSource="{Binding Lines}" SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Disabled" KeyUp="OnListBoxKeyUp">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel IsItemsHost="True" Orientation="Vertical" />
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<controls:EditableLabel Text="{Binding Line, Mode=TwoWay}" />
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ListBox>
 	</Grid>
 </UserControl>
