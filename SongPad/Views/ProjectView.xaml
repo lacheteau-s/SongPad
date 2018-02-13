@@ -3,11 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SongPad.Views"
+             xmlns:views="clr-namespace:SongPad.Views"
+			 xmlns:viewmodels="clr-namespace:SongPad.ViewModels"
              mc:Ignorable="d" 
 			 x:Name="ProjectViewControl"
+			 d:DataContext="{d:DesignInstance viewmodels:ProjectViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Background="DimGray">
-            
-    </Grid>
+	<Canvas x:Name="canvas" Background="#262626" MouseLeftButtonUp="OnCanvasMouseUp" PreviewMouseLeftButtonUp="OnCanvasMouseUp" MouseMove="OnCanvasMouseMove" MouseLeave="OnCanvasMouseLeave">
+		<ItemsControl x:Name="itemsCtrl" ItemsSource="{Binding Cards}" Width="{Binding ElementName=canvas, Path=ActualWidth}" Height="{Binding ElementName=canvas, Path=ActualHeight}">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<Canvas />
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<views:CardView DataContext="{Binding}" Width="200" Height="200" MouseDown="OnCardMouseDown" />
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+	</Canvas>
 </UserControl>
