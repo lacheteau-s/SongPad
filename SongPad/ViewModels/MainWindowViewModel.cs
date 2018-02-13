@@ -12,7 +12,7 @@ using System.Windows.Controls;
 
 namespace SongPad.ViewModels
 {
-	public class MainWindowViewModel : INotifyPropertyChanged
+	public class MainWindowViewModel : BaseViewModel
 	{
 		private IDialogService _dialogService;
 
@@ -31,8 +31,6 @@ namespace SongPad.ViewModels
 		public MenuViewModel MenuViewModel { get; private set; }
 
 		public WorkspaceViewModel WorkspaceViewModel { get; private set; }
-
-		public event PropertyChangedEventHandler PropertyChanged;
 
 		public MainWindowViewModel()
 		{
@@ -90,11 +88,6 @@ namespace SongPad.ViewModels
 		private void OnProjectSelectionChanged(object sender, EventArgs e)
 		{
 			RaisePropertyChanged(nameof(Title));
-		}
-
-		protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

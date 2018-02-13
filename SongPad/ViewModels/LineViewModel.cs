@@ -8,25 +8,14 @@ using System.Threading.Tasks;
 
 namespace SongPad.ViewModels
 {
-	public class LineViewModel : INotifyPropertyChanged
+	public class LineViewModel : BaseViewModel
 	{
 		private string _line;
 
 		public string Line
 		{
 			get { return _line; }
-			set
-			{
-				_line = value;
-				RaisePropertyChanged(nameof(Line));
-			}
-		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+			set { SetProperty(ref _line, value); }
 		}
 	}
 }

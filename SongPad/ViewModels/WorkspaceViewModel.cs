@@ -11,25 +11,20 @@ using System.Windows.Controls;
 
 namespace SongPad.ViewModels
 {
-	public class WorkspaceViewModel : INotifyPropertyChanged
+	public class WorkspaceViewModel : BaseViewModel
 	{
 		private ProjectViewModel _selectedProject;
-
-		public ObservableCollection<ProjectViewModel> Projects { get; set; }
 
 		public ProjectViewModel SelectedProject
 		{
 			get { return _selectedProject; }
-			set
-			{
-				_selectedProject = value;
-				RaisePropertyChanged(nameof(SelectedProject));
-			}
+			set { SetProperty(ref _selectedProject, value); }
 		}
+
+		public ObservableCollection<ProjectViewModel> Projects { get; set; }
 
 		public bool HasItems => Projects.Count > 0;
 
-		public event PropertyChangedEventHandler PropertyChanged;
 		public event EventHandler SelectionChanged;
 
 		public WorkspaceViewModel()
@@ -51,11 +46,6 @@ namespace SongPad.ViewModels
 			Projects.Add(project);
 			SelectedProject = project;
 			RaisePropertyChanged(nameof(HasItems));
-		}
-
-		private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)

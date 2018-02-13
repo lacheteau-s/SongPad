@@ -11,18 +11,14 @@ using System.Windows.Input;
 
 namespace SongPad.ViewModels
 {
-    public class CardViewModel : INotifyPropertyChanged
+    public class CardViewModel : BaseViewModel
     {
 		private string _title;
 
 		public string Title
 		{
 			get { return _title; }
-			set
-			{
-				_title = value;
-				RaisePropertyChanged(nameof(Title));
-			}
+			set { SetProperty(ref _title, value); }
 		}
 
 		private bool _isEditingTitle;
@@ -30,11 +26,7 @@ namespace SongPad.ViewModels
 		public bool IsEditingTitle
 		{
 			get { return _isEditingTitle; }
-			set
-			{
-				_isEditingTitle = value;
-				RaisePropertyChanged(nameof(IsEditingTitle));
-			}
+			set { SetProperty(ref _isEditingTitle, value); }
 		}
 
 		public ObservableCollection<LineViewModel> Lines { get; set; }
@@ -42,7 +34,6 @@ namespace SongPad.ViewModels
 		public ICommand AddCommand => new Command(OnAdd);
 		public ICommand RemoveCommand => new Command(OnRemove);
 
-		public event PropertyChangedEventHandler PropertyChanged;
 		public event EventHandler RemoveEventHandler;
 
 		public CardViewModel()
@@ -94,11 +85,6 @@ namespace SongPad.ViewModels
 		{
 			// TODO : Clear lines
 			RemoveEventHandler?.Invoke(this, EventArgs.Empty);
-		}
-
-		private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }
