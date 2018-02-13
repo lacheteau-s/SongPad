@@ -42,12 +42,27 @@ namespace SongPad.Views
 
 		private void OnListBoxKeyUp(object sender, KeyEventArgs e)
 		{
-			if (e.Key == Key.Delete)
+			var dict = new Dictionary<Key, Action<LineViewModel[]>>
+			{
+				{ Key.Delete, ViewModel.RemoveLines },
+				{ Key.Up, ViewModel.MoveLinesUp },
+				{ Key.Down, ViewModel.MoveLinesDown }
+			};
+
+			if (dict.Keys.Contains(e.Key))
 			{
 				var selection = listBox.SelectedItems.Cast<LineViewModel>().ToArray();
 
-				foreach (var item in selection)
-					ViewModel.Lines.Remove((LineViewModel)item);
+				dict[e.Key](selection);
+
+				// TODO : remove
+				// This prevents the ListBox from being focused when the top/bottom has been reached
+				// It should be replaced with a ListBox override or a customized ItemsControl with a custom selection behavior
+				if (e.Key == Key.Up || e.Key == Key.Down)
+				{
+					var item = (ListBoxItem)listBox.ItemContainerGenerator.ContainerFromIndex(0);
+					item.Focus();
+				}
 			}
 		}
 	}

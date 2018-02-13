@@ -51,6 +51,38 @@ namespace SongPad.ViewModels
 			Lines = new ObservableCollection<LineViewModel>();
 		}
 
+		public void RemoveLines(LineViewModel[] items)
+		{
+			foreach (var item in items)
+				Lines.Remove(item);
+		}
+
+		public void MoveLinesUp(LineViewModel[] items)
+		{
+			var indexes = items.Select(i => Lines.IndexOf(i)).OrderBy(i => i).ToArray();
+
+			for (int i = 0; i < items.Length; ++i)
+			{
+				if (i == 0 && indexes[i] > 0)
+					Lines.Move(indexes[i], --indexes[i]);
+				else if (i > 0 && indexes[i] > (indexes[i - 1] + 1))
+					Lines.Move(indexes[i], --indexes[i]);
+			}
+		}
+
+		public void MoveLinesDown(LineViewModel[] items)
+		{
+			var indexes = items.Select(i => Lines.IndexOf(i)).OrderByDescending(i => i).ToArray();
+
+			for (int i = 0; i < items.Length; ++i)
+			{
+				if (i == 0 && indexes[i] < (Lines.Count - 1))
+					Lines.Move(indexes[i], ++indexes[i]);
+				else if (i > 0 && indexes[i] < (indexes[i - 1] - 1))
+					Lines.Move(indexes[i], ++indexes[i]);
+			}
+		}
+
 		private void OnAdd()
 		{
 			var line = IoC.GetInstance<LineViewModel>();
