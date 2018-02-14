@@ -9,16 +9,77 @@
              mc:Ignorable="d" 
 			 d:DataContext="{d:DesignInstance viewmodels:WorkspaceViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
+	<UserControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/SongPad;component/Resources/Templates.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</UserControl.Resources>
 	<Grid>
-		<TabControl ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject, Mode=TwoWay}">
+		<TabControl x:Name="tc" ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject, Mode=TwoWay}">
+			<TabControl.Style>
+				<Style TargetType="TabControl">
+					<Setter Property="Template">
+						<Setter.Value>
+							<ControlTemplate TargetType="TabControl">
+								<Border BorderBrush="{DynamicResource borderColor}" BorderThickness="1">
+									<Grid>
+										<Grid.RowDefinitions>
+											<RowDefinition Height="Auto" />
+											<RowDefinition Height="*" />
+										</Grid.RowDefinitions>
+
+										<TabPanel IsItemsHost="True" Grid.Row="0" Background="{DynamicResource tabControlBackground}" />
+										<Border Grid.Row="1" BorderBrush="{DynamicResource borderColor}" BorderThickness="0,1,0,0">
+											<ContentPresenter ContentSource="SelectedContent" />
+										</Border>
+									</Grid>
+								</Border>
+							</ControlTemplate>
+						</Setter.Value>
+					</Setter>
+				</Style>
+			</TabControl.Style>
+			
+			<!-- TAB ITEM TEMPLATE -->
+			<TabControl.Resources>
+				<Style TargetType="TabItem">
+					<Setter Property="Template">
+						<Setter.Value>
+							<ControlTemplate TargetType="TabItem">
+								<Border Name="panel" BorderBrush="{DynamicResource borderColor}" BorderThickness="0,0,1,0" UseLayoutRounding="True">
+									<ContentPresenter ContentSource="Header" Margin="10,5" />
+								</Border>
+								<ControlTemplate.Triggers>
+									<Trigger Property="IsSelected" Value="True">
+										<Setter TargetName="panel" Property="Background" Value="{DynamicResource controlBackground}" />
+									</Trigger>
+									<Trigger Property="IsSelected" Value="False">
+										<Setter TargetName="panel" Property="Background" Value="{DynamicResource tabControlBackground}" />
+									</Trigger>
+								</ControlTemplate.Triggers>
+							</ControlTemplate>
+						</Setter.Value>
+					</Setter>
+				</Style>
+			</TabControl.Resources>
+			
+			<!-- TAB ITEM "CONTENT" TEMPLATE -->
 			<TabControl.ItemTemplate>
 				<DataTemplate>
 					<StackPanel Orientation="Horizontal">
-						<Label Content="{Binding Title}" />
-						<Button Content="X" />
+						<TextBlock Text="{Binding Title}" Foreground="{DynamicResource foreground}" VerticalAlignment="Center" />
+						<Button Click="Button_Click" Margin="10,0,0,0" Template="{StaticResource ImageButton}">
+							<Canvas Width="10" Height="10" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+								<Path Width="8" Height="8" Canvas.Left="1" Canvas.Top="1" Stretch="Fill" Fill="#FFFFFFFF" Data="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z "/>
+							</Canvas>
+						</Button>
 					</StackPanel>
 				</DataTemplate>
 			</TabControl.ItemTemplate>
+			
+			<!-- TAB CONTENT -->
 			<TabControl.ContentTemplate>
 				<DataTemplate>
 					<views:ProjectView DataContext="{Binding}" />
