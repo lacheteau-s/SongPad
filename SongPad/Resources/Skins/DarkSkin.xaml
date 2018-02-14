@@ -2,8 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 	<SolidColorBrush x:Key="controlBackground" Color="#535353" />
-	<SolidColorBrush x:Key="controlForeground" Color="#FFFFFF" />
-	<SolidColorBrush x:Key="controlForegroundInverse" Color="#000000" />
+	<SolidColorBrush x:Key="foreground" Color="#FFFFFF" />
+	<SolidColorBrush x:Key="foregroundInverse" Color="#000000" />
 	<SolidColorBrush x:Key="tabControlBackground" Color="#424242" />
 	<SolidColorBrush x:Key="borderColor" Color="#383838" />
+	<SolidColorBrush x:Key="workspaceBackground" Color="#282828" />
 </ResourceDictionary>

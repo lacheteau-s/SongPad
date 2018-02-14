@@ -20,13 +20,13 @@
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 		<DockPanel Grid.Row="0">
-			<Menu DockPanel.Dock="Top" DataContext="{Binding MenuViewModel}">
-				<MenuItem Header="_File">
-					<MenuItem Header="_New" Command="{Binding NewCommand}"/>
-					<MenuItem Header="_Open" Command="{Binding OpenCommand}"/>
-					<MenuItem Header="_Save" Command="{Binding SaveCommand}"/>
+			<Menu DockPanel.Dock="Top" DataContext="{Binding MenuViewModel}" Background="{DynamicResource ResourceKey=controlBackground}">
+				<MenuItem Header="_File" Foreground="{DynamicResource foreground}">
+					<MenuItem Header="_New" Command="{Binding NewCommand}" Foreground="{DynamicResource foregroundInverse}" />
+					<MenuItem Header="_Open" Command="{Binding OpenCommand}" Foreground="{DynamicResource foregroundInverse}" />
+					<MenuItem Header="_Save" Command="{Binding SaveCommand}" Foreground="{DynamicResource foregroundInverse}" />
 					<Separator />
-					<MenuItem Header="_Quit" Command="{Binding QuitCommand}"/>
+					<MenuItem Header="_Quit" Command="{Binding QuitCommand}" Foreground="{DynamicResource foregroundInverse}" />
 				</MenuItem>
 			</Menu>
 		</DockPanel>
