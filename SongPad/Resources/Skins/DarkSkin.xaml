@@ -4,7 +4,13 @@
 	<SolidColorBrush x:Key="controlBackground" Color="#535353" />
 	<SolidColorBrush x:Key="foreground" Color="#FFFFFF" />
 	<SolidColorBrush x:Key="foregroundInverse" Color="#000000" />
-	<SolidColorBrush x:Key="tabControlBackground" Color="#424242" />
 	<SolidColorBrush x:Key="borderColor" Color="#383838" />
 	<SolidColorBrush x:Key="workspaceBackground" Color="#282828" />
+	
+	<!-- TABS -->
+	<SolidColorBrush x:Key="tabControlBackground" Color="#424242" />
+	<SolidColorBrush x:Key="tabSelectedColor" Color="#007ACC" />
+	<SolidColorBrush x:Key="tabHoverBackground" Color="#535353" />
+	<SolidColorBrush x:Key="tabBackground" Color="#424242" />
+
 </ResourceDictionary>

@@ -17,7 +17,7 @@
 		</ResourceDictionary>
 	</UserControl.Resources>
 	<Grid>
-		<TabControl x:Name="tc" ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject, Mode=TwoWay}">
+		<TabControl ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject, Mode=TwoWay}">
 			<TabControl.Style>
 				<Style TargetType="TabControl">
 					<Setter Property="Template">
@@ -31,7 +31,7 @@
 										</Grid.RowDefinitions>
 
 										<TabPanel IsItemsHost="True" Grid.Row="0" Background="{DynamicResource tabControlBackground}" />
-										<Border Grid.Row="1" BorderBrush="{DynamicResource borderColor}" BorderThickness="0,1,0,0">
+										<Border Grid.Row="1" BorderBrush="{DynamicResource tabSelectedColor}" BorderThickness="0,2,0,0">
 											<ContentPresenter ContentSource="SelectedContent" />
 										</Border>
 									</Grid>
@@ -53,11 +53,20 @@
 								</Border>
 								<ControlTemplate.Triggers>
 									<Trigger Property="IsSelected" Value="True">
-										<Setter TargetName="panel" Property="Background" Value="{DynamicResource controlBackground}" />
+										<Setter TargetName="panel" Property="Background" Value="{DynamicResource tabSelectedColor}" />
 									</Trigger>
 									<Trigger Property="IsSelected" Value="False">
-										<Setter TargetName="panel" Property="Background" Value="{DynamicResource tabControlBackground}" />
+										<Setter TargetName="panel" Property="Background" Value="{DynamicResource tabBackground}" />
 									</Trigger>
+									<MultiTrigger>
+										<MultiTrigger.Conditions>
+											<Condition Property="IsMouseOver" Value="True" />
+											<Condition Property="IsSelected" Value="False" />
+										</MultiTrigger.Conditions>
+										<MultiTrigger.Setters>
+											<Setter TargetName="panel" Property="Background" Value="{DynamicResource tabHoverBackground}" />
+										</MultiTrigger.Setters>
+									</MultiTrigger>
 								</ControlTemplate.Triggers>
 							</ControlTemplate>
 						</Setter.Value>
@@ -70,7 +79,8 @@
 				<DataTemplate>
 					<StackPanel Orientation="Horizontal">
 						<TextBlock Text="{Binding Title}" Foreground="{DynamicResource foreground}" VerticalAlignment="Center" />
-						<Button Click="Button_Click" Margin="10,0,0,0" Template="{StaticResource ImageButton}">
+						<Button Template="{StaticResource ImageButton}"
+								Margin="10,0,0,0" Width="16">
 							<Canvas Width="10" Height="10" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
 								<Path Width="8" Height="8" Canvas.Left="1" Canvas.Top="1" Stretch="Fill" Fill="#FFFFFFFF" Data="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z "/>
 							</Canvas>
