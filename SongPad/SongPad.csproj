@@ -57,8 +57,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Resources\Behaviors\DoubleClickResizeBehavior.cs" />
     <Compile Include="Resources\Behaviors\DragBehavior.cs" />
     <Compile Include="Resources\Behaviors\ResizeBehavior.cs" />
+    <Compile Include="Resources\Commands\MaximizeCommand.cs" />
+    <Compile Include="Resources\Commands\MinimizeCommand.cs" />
     <Compile Include="Resources\Controls\EditableLabel.xaml.cs">
       <DependentUpon>EditableLabel.xaml</DependentUpon>
     </Compile>
