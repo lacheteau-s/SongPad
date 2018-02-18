@@ -6,10 +6,15 @@
 			 xmlns:viewmodels="clr-namespace:SongPad.ViewModels"
 			 xmlns:converters="clr-namespace:SongPad.Converters">
     <Application.Resources>
-		<converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-		<viewmodels:MainWindowViewModel x:Key="MainWindowViewModel" />
-		<DataTemplate DataType="{x:Type viewmodels:NewProjectDialogViewModel}">
-			<views:NewProjectDialogView />
-		</DataTemplate>
+		<ResourceDictionary>
+			<converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+			<viewmodels:MainWindowViewModel x:Key="MainWindowViewModel" />
+			<DataTemplate DataType="{x:Type viewmodels:NewProjectDialogViewModel}">
+				<views:NewProjectDialogView />
+			</DataTemplate>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/SongPad;component/Resources/Templates/Window.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
 	</Application.Resources>
 </Application>
