@@ -13,4 +13,9 @@
 	<SolidColorBrush x:Key="tabHoverBackground" Color="#535353" />
 	<SolidColorBrush x:Key="tabBackground" Color="#424242" />
 
+	<!-- BUTTONS -->
+	<SolidColorBrush x:Key="windowButtonPressedBackground" Color="#007ACC" />
+	<SolidColorBrush x:Key="buttonHoverBackground" Color="#33FFFFFF" />
+	<SolidColorBrush x:Key="buttonPressedBackground" Color="#33000000" />
+
 </ResourceDictionary>

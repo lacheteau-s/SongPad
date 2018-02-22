@@ -1,7 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:behaviors="clr-namespace:SongPad.Resources.Behaviors"
-					xmlns:commands="clr-namespace:SongPad.Resources.Commands">
+					xmlns:commands="clr-namespace:SongPad.Resources.Commands"
+					xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
+
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary Source="/SongPad;component/Resources/Templates/Button.xaml" />
+	</ResourceDictionary.MergedDictionaries>
 
 	<Style x:Key="WindowStyle" TargetType="{x:Type Window}">
 		<Setter Property="WindowState" Value="Maximized" />
@@ -55,62 +60,86 @@
 					</Style.Triggers>
 				</Style>
 			</Grid.Style>-->
-			<Border>
-				<Border.Style>
-					<Style TargetType="{x:Type Border}">
-						<Setter Property="BorderThickness" Value="6"/>
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=WindowState}" Value="Maximized">
-								<Setter Property="BorderThickness" Value="6"/>
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</Border.Style>
-				<Grid Background="Bisque">
-					<Grid>
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="*" />
-						</Grid.RowDefinitions>
-						<Grid Grid.Row="0" behaviors:DragBehavior.LeftMouseButtonDrag="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
-							<Grid.ColumnDefinitions>
-								<!--<ColumnDefinition Width="Auto" />-->
-								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="Auto" />
-							</Grid.ColumnDefinitions>
-							<Label Grid.Column="0" Content="{TemplateBinding Property=Title}" behaviors:DoubleClickResizeBehavior.ExecuteCommand="{StaticResource MaximizeCommand}" behaviors:DoubleClickResizeBehavior.ExecuteCommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Background="Aqua" />
-							<StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-								<Button Content="Minimize" Command="{StaticResource MinimizeCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" />
-								<Button Content="Maximize" Command="{StaticResource MaximizeCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" />
-								<Button Content="Close" />
-							</StackPanel>
-						</Grid>
-						<Border Grid.Row="1">
-							<Grid>
-								<AdornerDecorator>
-									<ContentPresenter />
-								</AdornerDecorator>
-							</Grid>
-						</Border>
+		<Border>
+			<Border.Style>
+				<Style TargetType="{x:Type Border}">
+					<Setter Property="BorderThickness" Value="6"/>
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=WindowState}" Value="Maximized">
+							<Setter Property="BorderThickness" Value="6"/>
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</Border.Style>
+			<Grid Background="Bisque">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+					<Grid Grid.Row="0" behaviors:DragBehavior.LeftMouseButtonDrag="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Background="{DynamicResource controlBackground}">
+					<Grid.ColumnDefinitions>
+						<!--<ColumnDefinition Width="Auto" />-->
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+						<Label Grid.Column="0" Content="{TemplateBinding Property=Title}" behaviors:DoubleClickResizeBehavior.ExecuteCommand="{StaticResource MaximizeCommand}" behaviors:DoubleClickResizeBehavior.ExecuteCommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Foreground="White" />
+						<StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+							
+							<Button Foreground="{DynamicResource foreground}" Width="34" Height="26"
+									Template="{StaticResource WindowButton}"
+									Content="{iconPacks:Material WindowMinimize, Width=8, Height=8}"
+									Command="{StaticResource MinimizeCommand}"
+									CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" />
+
+							<Button Foreground="{DynamicResource foreground}" Width="34" Height="26"
+									Template="{StaticResource WindowButton}"
+									Command="{StaticResource MaximizeCommand}"
+									CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}">
+								<Button.Style>
+									<Style TargetType="{x:Type Button}">
+										<Setter Property="Content" Value="{iconPacks:Material WindowMaximize, Width=8, Height=8}" />
+										<Style.Triggers>
+											<DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=WindowState}" Value="Maximized">
+												<Setter Property="Content" Value="{iconPacks:Material WindowRestore, Width=8, Height=8}" />
+											</DataTrigger>
+										</Style.Triggers>
+									</Style>
+								</Button.Style>
+							</Button>
+
+							<Button Foreground="{DynamicResource foreground}" Width="34" Height="26"
+									Template="{StaticResource WindowButton}"
+									Content="{iconPacks:Material WindowClose, Width=8, Height=8}" />
+
+						</StackPanel>
 					</Grid>
-					<Thumb x:Name="ThumbLeft" Background="Red" Style="{StaticResource WEThumb}" HorizontalAlignment="Left"
-						   behaviors:ResizeBehavior.LeftResize="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
-					<Thumb x:Name="ThumbTopLeft" Background="Aqua" Style="{StaticResource NWSEThumb}" HorizontalAlignment="Left" VerticalAlignment="Top"
-						   behaviors:ResizeBehavior.TopLeftResize="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
-					<Thumb x:Name="ThumbTop" Background="Green" Style="{StaticResource NSThumb}" VerticalAlignment="Top"
-						   behaviors:ResizeBehavior.TopResize="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
-					<Thumb x:Name="ThumbTopRight" Style="{StaticResource NESWThumb}" HorizontalAlignment="Right" VerticalAlignment="Top"
-						   behaviors:ResizeBehavior.TopRightResize="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
-					<Thumb x:Name="ThumbRight" Style="{StaticResource WEThumb}" HorizontalAlignment="Right"
-						   behaviors:ResizeBehavior.RightResize="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
-					<Thumb x:Name="ThumbBottomRight" Style="{StaticResource NWSEThumb}" HorizontalAlignment="Right" VerticalAlignment="Bottom"
-						   behaviors:ResizeBehavior.BottomRightResize="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
-					<Thumb x:Name="ThumbBottom" Style="{StaticResource NSThumb}" VerticalAlignment="Bottom"
-						   behaviors:ResizeBehavior.BottomResize="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
-					<Thumb x:Name="ThumbBottomLeft" Style="{StaticResource NESWThumb}" HorizontalAlignment="Left" VerticalAlignment="Bottom"
-						   behaviors:ResizeBehavior.BottomLeftResize="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+					<Border Grid.Row="1">
+						<Grid>
+							<AdornerDecorator>
+								<ContentPresenter />
+							</AdornerDecorator>
+						</Grid>
+					</Border>
 				</Grid>
-			</Border>
+				<Thumb x:Name="ThumbLeft" Background="Red" Style="{StaticResource WEThumb}" HorizontalAlignment="Left"
+					   behaviors:ResizeBehavior.LeftResize="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+				<Thumb x:Name="ThumbTopLeft" Background="Aqua" Style="{StaticResource NWSEThumb}" HorizontalAlignment="Left" VerticalAlignment="Top"
+					   behaviors:ResizeBehavior.TopLeftResize="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+				<Thumb x:Name="ThumbTop" Background="Green" Style="{StaticResource NSThumb}" VerticalAlignment="Top"
+					   behaviors:ResizeBehavior.TopResize="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+				<Thumb x:Name="ThumbTopRight" Style="{StaticResource NESWThumb}" HorizontalAlignment="Right" VerticalAlignment="Top"
+					   behaviors:ResizeBehavior.TopRightResize="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+				<Thumb x:Name="ThumbRight" Style="{StaticResource WEThumb}" HorizontalAlignment="Right"
+					   behaviors:ResizeBehavior.RightResize="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+				<Thumb x:Name="ThumbBottomRight" Style="{StaticResource NWSEThumb}" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+					   behaviors:ResizeBehavior.BottomRightResize="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+				<Thumb x:Name="ThumbBottom" Style="{StaticResource NSThumb}" VerticalAlignment="Bottom"
+					   behaviors:ResizeBehavior.BottomResize="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+				<Thumb x:Name="ThumbBottomLeft" Style="{StaticResource NESWThumb}" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+					   behaviors:ResizeBehavior.BottomLeftResize="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+			</Grid>
+		</Border>
 		<!-- Thumbs should be placed here -->
 		<!--</Grid>-->
 	</ControlTemplate>
