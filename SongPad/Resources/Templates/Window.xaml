@@ -78,21 +78,31 @@
 						<RowDefinition Height="*" />
 					</Grid.RowDefinitions>
 					<Grid Grid.Row="0" behaviors:DragBehavior.LeftMouseButtonDrag="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Background="{DynamicResource controlBackground}">
-					<Grid.ColumnDefinitions>
-						<!--<ColumnDefinition Width="Auto" />-->
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="Auto" />
-					</Grid.ColumnDefinitions>
-						<Label Grid.Column="0" Content="{TemplateBinding Property=Title}" behaviors:DoubleClickResizeBehavior.ExecuteCommand="{StaticResource MaximizeCommand}" behaviors:DoubleClickResizeBehavior.ExecuteCommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Foreground="White" />
-						<StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						
+						<Label Grid.Column="0">
+							<Image Width="20" Height="20" Source="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=Icon}" />
+						</Label>
+
+						<Label Grid.Column="1" Foreground="{DynamicResource foreground}"
+							   VerticalContentAlignment="Center"
+							   Content="{TemplateBinding Property=Title}"
+							   behaviors:DoubleClickResizeBehavior.ExecuteCommand="{StaticResource MaximizeCommand}"
+							   behaviors:DoubleClickResizeBehavior.ExecuteCommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+						
+						<StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
 							
-							<Button Foreground="{DynamicResource foreground}" Width="34" Height="26"
+							<Button Foreground="{DynamicResource foreground}" Width="34" Height="30"
 									Template="{StaticResource WindowButton}"
 									Content="{iconPacks:Material WindowMinimize, Width=8, Height=8}"
 									Command="{StaticResource MinimizeCommand}"
 									CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" />
 
-							<Button Foreground="{DynamicResource foreground}" Width="34" Height="26"
+							<Button Foreground="{DynamicResource foreground}" Width="34" Height="30"
 									Template="{StaticResource WindowButton}"
 									Command="{StaticResource MaximizeCommand}"
 									CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}">
@@ -108,7 +118,7 @@
 								</Button.Style>
 							</Button>
 
-							<Button Foreground="{DynamicResource foreground}" Width="34" Height="26"
+							<Button Foreground="{DynamicResource foreground}" Width="34" Height="30"
 									Template="{StaticResource WindowButton}"
 									Content="{iconPacks:Material WindowClose, Width=8, Height=8}" />
 
@@ -122,11 +132,11 @@
 						</Grid>
 					</Border>
 				</Grid>
-				<Thumb x:Name="ThumbLeft" Background="Red" Style="{StaticResource WEThumb}" HorizontalAlignment="Left"
+				<Thumb x:Name="ThumbLeft" Style="{StaticResource WEThumb}" HorizontalAlignment="Left"
 					   behaviors:ResizeBehavior.LeftResize="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
-				<Thumb x:Name="ThumbTopLeft" Background="Aqua" Style="{StaticResource NWSEThumb}" HorizontalAlignment="Left" VerticalAlignment="Top"
+				<Thumb x:Name="ThumbTopLeft" Style="{StaticResource NWSEThumb}" HorizontalAlignment="Left" VerticalAlignment="Top"
 					   behaviors:ResizeBehavior.TopLeftResize="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
-				<Thumb x:Name="ThumbTop" Background="Green" Style="{StaticResource NSThumb}" VerticalAlignment="Top"
+				<Thumb x:Name="ThumbTop" Style="{StaticResource NSThumb}" VerticalAlignment="Top"
 					   behaviors:ResizeBehavior.TopResize="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
 				<Thumb x:Name="ThumbTopRight" Style="{StaticResource NESWThumb}" HorizontalAlignment="Right" VerticalAlignment="Top"
 					   behaviors:ResizeBehavior.TopRightResize="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />

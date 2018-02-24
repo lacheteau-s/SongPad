@@ -9,7 +9,8 @@
 		DataContext="{StaticResource ResourceKey=MainWindowViewModel}"
 		Template="{DynamicResource WindowTemplate}"
 		Style="{DynamicResource WindowStyle}"
-		Title="{Binding Title}">
+		Title="{Binding Title}"
+		Icon="/SongPad;component/Resources/SongPad.ico">
 	<Window.Resources>
 		<converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 	</Window.Resources>
