@@ -35,7 +35,23 @@ namespace SongPad.Resources.Behaviors
 			var window = ((UIElement)sender).GetValue(LeftMouseButtonDrag) as Window;
 
 			if (window != null)
+			{
+				if (window.WindowState == WindowState.Maximized)
+				{
+					var pos = e.GetPosition(window);
+
+					window.WindowState = WindowState.Normal;
+
+					if (window.PointToScreen(pos).X < (SystemParameters.WorkArea.Width / 2))
+						window.Left = 0;
+					else
+						window.Left = SystemParameters.WorkArea.Width - window.ActualWidth;
+
+					window.Top = 0;
+				}
+
 				window.DragMove();
+			}
 		}
-    }
+	}
 }
