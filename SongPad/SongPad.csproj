@@ -63,11 +63,13 @@
     <Compile Include="Resources\Behaviors\DoubleClickResizeBehavior.cs" />
     <Compile Include="Resources\Behaviors\DragBehavior.cs" />
     <Compile Include="Resources\Behaviors\ResizeBehavior.cs" />
+    <Compile Include="Resources\Behaviors\ShowSystemMenuBehavior.cs" />
     <Compile Include="Resources\Commands\MaximizeCommand.cs" />
     <Compile Include="Resources\Commands\MinimizeCommand.cs" />
     <Compile Include="Resources\Controls\EditableLabel.xaml.cs">
       <DependentUpon>EditableLabel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tools\SystemMenuManager.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CardViewModel.cs" />
     <Compile Include="ViewModels\LineViewModel.cs" />
