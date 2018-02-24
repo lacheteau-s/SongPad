@@ -84,7 +84,8 @@
 							<ColumnDefinition Width="Auto" />
 						</Grid.ColumnDefinitions>
 						
-						<Label Grid.Column="0">
+						<Label Grid.Column="0"
+							   behaviors:DoubleClickBehavior.ExecuteCommand="{Binding CloseCommand}">
 							<Image Width="20" Height="20"
 								   Source="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=Icon}"
 								   behaviors:ShowSystemMenuBehavior.TargetWindow="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
@@ -94,8 +95,8 @@
 						<Label Grid.Column="1" Foreground="{DynamicResource foreground}"
 							   VerticalContentAlignment="Center"
 							   Content="{TemplateBinding Property=Title}"
-							   behaviors:DoubleClickResizeBehavior.ExecuteCommand="{StaticResource MaximizeCommand}"
-							   behaviors:DoubleClickResizeBehavior.ExecuteCommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+							   behaviors:DoubleClickBehavior.ExecuteCommand="{StaticResource MaximizeCommand}"
+							   behaviors:DoubleClickBehavior.ExecuteCommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
 							   behaviors:DragBehavior.LeftMouseButtonDrag="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
 							   behaviors:ShowSystemMenuBehavior.TargetWindow="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
 							   behaviors:ShowSystemMenuBehavior.RightButtonShow="True" />
@@ -126,7 +127,8 @@
 
 							<Button Foreground="{DynamicResource foreground}" Width="34" Height="30"
 									Template="{StaticResource WindowButton}"
-									Content="{iconPacks:Material WindowClose, Width=8, Height=8}" />
+									Content="{iconPacks:Material WindowClose, Width=8, Height=8}"
+									Command="{Binding CloseCommand}" />
 
 						</StackPanel>
 					</Grid>

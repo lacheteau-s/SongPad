@@ -33,13 +33,20 @@ namespace SongPad.Views
 			base.OnInitialized(e);
 
 			ViewModel.Initialize();
+			ViewModel.CloseWindow += OnClose;
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
 		{
 			base.OnClosing(e);
 
+			ViewModel.CloseWindow -= OnClose;
 			ViewModel.Shutdown();
+		}
+
+		private void OnClose(object sender, EventArgs e)
+		{
+			this.Close();
 		}
 	}
 }

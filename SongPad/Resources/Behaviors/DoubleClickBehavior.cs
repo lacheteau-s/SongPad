@@ -9,10 +9,10 @@ using System.Windows.Input;
 
 namespace SongPad.Resources.Behaviors
 {
-	public static class DoubleClickResizeBehavior
+	public static class DoubleClickBehavior
 	{
-		public static readonly DependencyProperty ExecuteCommand = DependencyProperty.RegisterAttached("ExecuteCommand", typeof(ICommand), typeof(DoubleClickResizeBehavior), new UIPropertyMetadata(null, OnExecuteCommandChanged));
-		public static readonly DependencyProperty ExecuteCommandParameter = DependencyProperty.RegisterAttached("ExecuteCommandParameter", typeof(Window), typeof(DoubleClickResizeBehavior));
+		public static readonly DependencyProperty ExecuteCommand = DependencyProperty.RegisterAttached("ExecuteCommand", typeof(ICommand), typeof(DoubleClickBehavior), new UIPropertyMetadata(null, OnExecuteCommandChanged));
+		public static readonly DependencyProperty ExecuteCommandParameter = DependencyProperty.RegisterAttached("ExecuteCommandParameter", typeof(Window), typeof(DoubleClickBehavior));
 
 		public static ICommand GetExecuteCommand(DependencyObject obj)
 		{

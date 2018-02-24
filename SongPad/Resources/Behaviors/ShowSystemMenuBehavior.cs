@@ -12,7 +12,7 @@ namespace SongPad.Resources.Behaviors
 {
     public class ShowSystemMenuBehavior
     {
-		static bool leftButtonToggle = true;
+		static bool showMenu = false;
 
 		public static readonly DependencyProperty TargetWindow = DependencyProperty.RegisterAttached("TargetWindow", typeof(Window), typeof(ShowSystemMenuBehavior));
 		public static readonly DependencyProperty LeftButtonShowAt = DependencyProperty.RegisterAttached("LeftButtonShowAt", typeof(UIElement), typeof(ShowSystemMenuBehavior), new UIPropertyMetadata(null, LeftButtonShowAtChanged));
@@ -66,11 +66,19 @@ namespace SongPad.Resources.Behaviors
 
 		static void LeftButtonDownShow(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
-			var element = ((UIElement)sender).GetValue(LeftButtonShowAt);
-			var showMenuAt = ((Visual)element).PointToScreen(new Point(0, 0));
-			var targetWindow = ((UIElement)sender).GetValue(TargetWindow) as Window;
+			if (e.ClickCount > 1)
+				return;
 
-			SystemMenuManager.ShowMenu(targetWindow, showMenuAt);
+			if (!showMenu)
+			{
+				var element = ((UIElement)sender).GetValue(LeftButtonShowAt);
+				var showMenuAt = ((Visual)element).PointToScreen(new Point(0, 0));
+				var targetWindow = ((UIElement)sender).GetValue(TargetWindow) as Window;
+
+				SystemMenuManager.ShowMenu(targetWindow, showMenuAt);
+			}
+
+			showMenu = !showMenu;
 		}
 
 		static void RightButtonDownShow(object sender, System.Windows.Input.MouseButtonEventArgs e)

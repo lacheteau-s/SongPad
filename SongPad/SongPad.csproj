@@ -60,7 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
-    <Compile Include="Resources\Behaviors\DoubleClickResizeBehavior.cs" />
+    <Compile Include="Resources\Behaviors\DoubleClickBehavior.cs" />
     <Compile Include="Resources\Behaviors\DragBehavior.cs" />
     <Compile Include="Resources\Behaviors\ResizeBehavior.cs" />
     <Compile Include="Resources\Behaviors\ShowSystemMenuBehavior.cs" />
