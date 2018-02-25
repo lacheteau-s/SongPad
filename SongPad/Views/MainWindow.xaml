@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SongPad.Views"
 		xmlns:converters="clr-namespace:SongPad.Converters"
 		xmlns:views="clr-namespace:SongPad.Views"
-		xmlns:viewmodels="clr-namespace:SongPad.ViewModels"
         mc:Ignorable="d"
-		WindowState="Maximized"
 		DataContext="{StaticResource ResourceKey=MainWindowViewModel}"
-        Title="{Binding Title}" Height="1920" Width="1080">
+		Template="{DynamicResource WindowTemplate}"
+		Style="{DynamicResource WindowStyle}"
+		Title="{Binding Title}"
+		Icon="/SongPad;component/Resources/SongPad.ico">
 	<Window.Resources>
 		<converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 	</Window.Resources>
@@ -19,14 +19,14 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
-		<DockPanel Grid.Row="0">
-			<Menu DockPanel.Dock="Top" DataContext="{Binding MenuViewModel}">
-				<MenuItem Header="_File">
-					<MenuItem Header="_New" Command="{Binding NewCommand}"/>
-					<MenuItem Header="_Open" Command="{Binding OpenCommand}"/>
-					<MenuItem Header="_Save" Command="{Binding SaveCommand}"/>
+		<DockPanel Grid.Row="0" Background="{DynamicResource ResourceKey=controlBackground}">
+			<Menu DockPanel.Dock="Top" DataContext="{Binding MenuViewModel}" Background="Transparent" Margin="0,6">
+				<MenuItem Header="_File" Foreground="{DynamicResource foreground}">
+					<MenuItem Header="_New" Command="{Binding NewCommand}" Foreground="{DynamicResource foregroundInverse}" />
+					<MenuItem Header="_Open" Command="{Binding OpenCommand}" Foreground="{DynamicResource foregroundInverse}" />
+					<MenuItem Header="_Save" Command="{Binding SaveCommand}" Foreground="{DynamicResource foregroundInverse}" />
 					<Separator />
-					<MenuItem Header="_Quit" Command="{Binding QuitCommand}"/>
+					<MenuItem Header="_Quit" Command="{Binding QuitCommand}" Foreground="{DynamicResource foregroundInverse}" />
 				</MenuItem>
 			</Menu>
 		</DockPanel>

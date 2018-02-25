@@ -9,7 +9,7 @@
 			 x:Name="ProjectViewControl"
 			 d:DataContext="{d:DesignInstance viewmodels:ProjectViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
-	<Canvas x:Name="canvas" Background="#262626" MouseLeftButtonUp="OnCanvasMouseUp" PreviewMouseLeftButtonUp="OnCanvasMouseUp" MouseMove="OnCanvasMouseMove" MouseLeave="OnCanvasMouseLeave">
+	<Canvas x:Name="canvas" Background="{DynamicResource workspaceBackground}" MouseLeftButtonUp="OnCanvasMouseUp" PreviewMouseLeftButtonUp="OnCanvasMouseUp" MouseMove="OnCanvasMouseMove" MouseLeave="OnCanvasMouseLeave">
 		<ItemsControl x:Name="itemsCtrl" ItemsSource="{Binding Cards}" Width="{Binding ElementName=canvas, Path=ActualWidth}" Height="{Binding ElementName=canvas, Path=ActualHeight}">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>

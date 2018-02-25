@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace SongPad.ViewModels
 {
@@ -31,6 +32,10 @@ namespace SongPad.ViewModels
 		public MenuViewModel MenuViewModel { get; private set; }
 
 		public WorkspaceViewModel WorkspaceViewModel { get; private set; }
+
+		public ICommand CloseCommand => new Command(Close);
+
+		public event EventHandler CloseWindow;
 
 		public MainWindowViewModel()
 		{
@@ -82,12 +87,17 @@ namespace SongPad.ViewModels
 
 		private void OnMenuQuit(object sender, EventArgs e)
 		{
-			throw new NotImplementedException();
+			Close();
 		}
 
 		private void OnProjectSelectionChanged(object sender, EventArgs e)
 		{
 			RaisePropertyChanged(nameof(Title));
+		}
+
+		private void Close()
+		{
+			CloseWindow?.Invoke(this, EventArgs.Empty);
 		}
 	}
 }
