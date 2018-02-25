@@ -27,14 +27,14 @@ namespace SongPad.Resources.Behaviors
 			var element = sender as UIElement;
 
 			if (element != null)
-				element.MouseLeftButtonDown += buttonDown;
+				element.MouseMove += MouseMove;
 		}
 
-		private static void buttonDown(object sender, MouseButtonEventArgs e)
+		private static void MouseMove(object sender, MouseEventArgs e)
 		{
 			var window = ((UIElement)sender).GetValue(LeftMouseButtonDrag) as Window;
 
-			if (window != null)
+			if (e.LeftButton == MouseButtonState.Pressed && window != null)
 			{
 				if (window.WindowState == WindowState.Maximized)
 				{
@@ -49,7 +49,6 @@ namespace SongPad.Resources.Behaviors
 
 					window.Top = 0;
 				}
-
 				window.DragMove();
 			}
 		}
