@@ -138,7 +138,7 @@
 
 						</StackPanel>
 					</Grid>
-					<Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource borderColor}">
+					<Border Grid.Row="1">
 						<Grid Background="{DynamicResource workspaceBackground}">
 							<AdornerDecorator>
 								<ContentPresenter x:Name="WindowContent" />
