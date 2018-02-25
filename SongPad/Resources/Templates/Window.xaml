@@ -77,7 +77,7 @@
 					</Style.Triggers>
 				</Style>
 			</Border.Style>
-			<Grid Background="Bisque">
+			<Grid>
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
@@ -139,7 +139,7 @@
 						</StackPanel>
 					</Grid>
 					<Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource borderColor}">
-						<Grid>
+						<Grid Background="{DynamicResource workspaceBackground}">
 							<AdornerDecorator>
 								<ContentPresenter x:Name="WindowContent" />
 							</AdornerDecorator>
