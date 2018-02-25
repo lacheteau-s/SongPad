@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:converters="clr-namespace:SongPad.Converters"
 		xmlns:views="clr-namespace:SongPad.Views"
+		xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
 		DataContext="{StaticResource ResourceKey=MainWindowViewModel}"
 		Template="{DynamicResource WindowTemplate}"
@@ -14,13 +15,13 @@
 	<Window.Resources>
 		<converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 	</Window.Resources>
-	<Grid>
-		<Grid.RowDefinitions>
+	<DockPanel>
+		<!--<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
-		</Grid.RowDefinitions>
-		<DockPanel Grid.Row="0" Background="{DynamicResource ResourceKey=controlBackground}">
-			<Menu DockPanel.Dock="Top" DataContext="{Binding MenuViewModel}" Background="Transparent" Margin="0,6">
+		</Grid.RowDefinitions>-->
+		<Border DockPanel.Dock="Top" Background="{DynamicResource ResourceKey=controlBackground}" BorderThickness="1,1,1,0" BorderBrush="{DynamicResource borderColor}">
+			<Menu DataContext="{Binding MenuViewModel}" Background="Transparent" Margin="0,6">
 				<MenuItem Header="_File" Foreground="{DynamicResource foreground}">
 					<MenuItem Header="_New" Command="{Binding NewCommand}" Foreground="{DynamicResource foregroundInverse}" />
 					<MenuItem Header="_Open" Command="{Binding OpenCommand}" Foreground="{DynamicResource foregroundInverse}" />
@@ -29,11 +30,24 @@
 					<MenuItem Header="_Quit" Command="{Binding QuitCommand}" Foreground="{DynamicResource foregroundInverse}" />
 				</MenuItem>
 			</Menu>
-		</DockPanel>
-		
+		</Border>
+
+		<!-- TOOLBAR -->
+		<Border DockPanel.Dock="Left" BorderThickness="1" BorderBrush="{DynamicResource borderColor}">
+			<ToolBarTray Orientation="Vertical" Background="{DynamicResource controlBackground}">
+				<ToolBar Background="Transparent" DataContext="{Binding ToolBarViewModel}">
+					<Button Content="{iconPacks:Material FilePlus, Width=16, Height=16}"
+							Foreground="{DynamicResource foreground}"
+							Template="{StaticResource ImageButton}"
+							Command="{Binding AddCardCommand}"
+							ToolTip="Add new card" Width="25" Height="25" Margin="2" />
+				</ToolBar>
+			</ToolBarTray>
+		</Border>
+
 		<!-- Content area -->
-		<Grid Grid.Row="1">
+		<Grid>
 			<views:WorkspaceView DataContext="{Binding WorkspaceViewModel}" Visibility="{Binding HasItems, Converter={StaticResource BooleanToVisibilityConverter}}" />
 		</Grid>
-    </Grid>
+    </DockPanel>
 </Window>

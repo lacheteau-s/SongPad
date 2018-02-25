@@ -17,7 +17,7 @@ namespace SongPad.ViewModels
 		public ProjectViewModel()
 		{
 			Cards = new ObservableCollection<CardViewModel>();
-			Cards.Add(new CardViewModel());  
+			Cards.Add(new CardViewModel());
 		}
 
 		public void Initialize()
@@ -26,6 +26,11 @@ namespace SongPad.ViewModels
 			{
 				card.RemoveEventHandler += OnCardRemove;
 			}
+		}
+
+		public void AddCard()
+		{
+			Cards.Add(new CardViewModel());
 		}
 
 		private void OnCardRemove(object sender, EventArgs e)
