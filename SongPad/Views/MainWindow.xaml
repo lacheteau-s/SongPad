@@ -35,10 +35,11 @@
 		<!-- TOOLBAR -->
 		<Border DockPanel.Dock="Left" BorderThickness="1" BorderBrush="{DynamicResource borderColor}">
 			<ToolBarTray Orientation="Vertical" Background="{DynamicResource controlBackground}">
-				<ToolBar Background="Transparent">
+				<ToolBar Background="Transparent" DataContext="{Binding ToolBarViewModel}">
 					<Button Content="{iconPacks:Material FilePlus, Width=16, Height=16}"
 							Foreground="{DynamicResource foreground}"
 							Template="{StaticResource ImageButton}"
+							Command="{Binding AddCardCommand}"
 							ToolTip="Add new card" Width="25" Height="25" Margin="2" />
 				</ToolBar>
 			</ToolBarTray>

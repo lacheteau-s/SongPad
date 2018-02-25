@@ -31,6 +31,8 @@ namespace SongPad.ViewModels
 
 		public MenuViewModel MenuViewModel { get; private set; }
 
+		public ToolBarViewModel ToolBarViewModel { get; private set; }
+
 		public WorkspaceViewModel WorkspaceViewModel { get; private set; }
 
 		public ICommand CloseCommand => new Command(Close);
@@ -42,6 +44,7 @@ namespace SongPad.ViewModels
 			_dialogService = IoC.GetInstance<IDialogService>(); // TODO: ViewModel locator to allow passing the service in ctor
 
 			MenuViewModel = IoC.GetInstance<MenuViewModel>();
+			ToolBarViewModel = IoC.GetInstance<ToolBarViewModel>();
 			WorkspaceViewModel = IoC.GetInstance<WorkspaceViewModel>();
 		}
 
@@ -54,7 +57,10 @@ namespace SongPad.ViewModels
 			MenuViewModel.OpenEventHandler += OnMenuOpen;
 			MenuViewModel.SaveEventHandler += OnMenuSave;
 			MenuViewModel.QuitEventHandler += OnMenuQuit;
+
 			WorkspaceViewModel.SelectionChanged += OnProjectSelectionChanged;
+
+			ToolBarViewModel.AddCardEventHandler += OnToolBarAddCard;
 		}
 
 		public void Shutdown()
@@ -64,7 +70,10 @@ namespace SongPad.ViewModels
 			MenuViewModel.OpenEventHandler -= OnMenuOpen;
 			MenuViewModel.SaveEventHandler -= OnMenuSave;
 			MenuViewModel.QuitEventHandler -= OnMenuQuit;
+
 			WorkspaceViewModel.SelectionChanged -= OnProjectSelectionChanged;
+
+			ToolBarViewModel.AddCardEventHandler -= OnToolBarAddCard;
 		}
 
 		private void OnMenuNew(object sender, EventArgs e)
@@ -93,6 +102,11 @@ namespace SongPad.ViewModels
 		private void OnProjectSelectionChanged(object sender, EventArgs e)
 		{
 			RaisePropertyChanged(nameof(Title));
+		}
+
+		private void OnToolBarAddCard(object sender, EventArgs e)
+		{
+			WorkspaceViewModel.AddCard();
 		}
 
 		private void Close()
