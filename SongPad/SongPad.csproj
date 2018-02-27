@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Messages\AddCardMessage.cs" />
     <Compile Include="Resources\Behaviors\DoubleClickBehavior.cs" />
     <Compile Include="Resources\Behaviors\DragBehavior.cs" />
     <Compile Include="Resources\Behaviors\ResizeBehavior.cs" />
@@ -69,6 +70,8 @@
     <Compile Include="Resources\Controls\EditableLabel.xaml.cs">
       <DependentUpon>EditableLabel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\Implementations\EventDispatcher.cs" />
+    <Compile Include="Services\Interfaces\IEventDispatcher.cs" />
     <Compile Include="Tools\SystemMenuManager.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CardViewModel.cs" />
