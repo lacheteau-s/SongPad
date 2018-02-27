@@ -27,13 +27,13 @@ namespace SongPad.ViewModels
 
 		public void Initialize()
 		{
-			_eventDispatcher.Subscribe<AddCardMessage>(this, OnAddCard);
+			_eventDispatcher.Subscribe<AddCardEvent>(this, OnAddCard);
 
 			foreach (var card in Cards)
 				card.RemoveEventHandler += OnCardRemove;
 		}
 
-		private void OnAddCard(AddCardMessage message)
+		private void OnAddCard(AddCardEvent message)
 		{
 			Cards.Add(new CardViewModel());
 		}

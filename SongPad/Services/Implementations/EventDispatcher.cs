@@ -17,9 +17,9 @@ namespace SongPad.Services
 
 		private Dictionary<Type, List<Subscriber>> _subscribers = new Dictionary<Type, List<Subscriber>>();
 
-		public void Invoke<TMessage>(TMessage message)
+		public void Invoke<TEvent>(TEvent evt)
 		{
-			var type = typeof(TMessage);
+			var type = typeof(TEvent);
 
 			if (_subscribers.ContainsKey(type))
 			{
@@ -27,16 +27,16 @@ namespace SongPad.Services
 
 				foreach (var subscriber in subscribers)
 				{
-					var action = (Action<TMessage>)subscriber.Action;
+					var action = (Action<TEvent>)subscriber.Action;
 
-					action.Invoke(message);
+					action.Invoke(evt);
 				}
 			}
 		}
 
-		public void Subscribe<TMessage>(object recipient, Action<TMessage> action)
+		public void Subscribe<TEvent>(object recipient, Action<TEvent> action)
 		{
-			var type = typeof(TMessage);
+			var type = typeof(TEvent);
 
 			if (!_subscribers.ContainsKey(type))
 				_subscribers.Add(type, new List<Subscriber>());
@@ -49,9 +49,9 @@ namespace SongPad.Services
 				});
 		}
 
-		public void Unsubscribe<TMessage>(object recipient)
+		public void Unsubscribe<TEvent>(object recipient)
 		{
-			var type = typeof(TMessage);
+			var type = typeof(TEvent);
 
 			if (_subscribers.ContainsKey(type))
 			{

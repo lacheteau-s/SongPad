@@ -8,10 +8,10 @@ namespace SongPad.Services
 {
     public interface IEventDispatcher
     {
-		void Subscribe<TMessage>(object recipient, Action<TMessage> action);
+		void Subscribe<TEvent>(object recipient, Action<TEvent> action);
 
-		void Invoke<TMessage>(TMessage message);
+		void Invoke<TEvent>(TEvent evt);
 
-		void Unsubscribe<TMessage>(object recipient);
+		void Unsubscribe<TEvent>(object recipient);
     }
 }
