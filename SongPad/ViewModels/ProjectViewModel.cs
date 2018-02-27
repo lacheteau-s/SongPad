@@ -1,4 +1,5 @@
-﻿using SongPad.Services;
+﻿using SongPad.Messages;
+using SongPad.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,22 +11,31 @@ namespace SongPad.ViewModels
 {
 	public class ProjectViewModel
 	{
+		private IEventDispatcher _eventDispatcher;
+
 		public string Title { get; set; }
 
 		public ObservableCollection<CardViewModel> Cards { get; set; }
 
-		public ProjectViewModel()
+		public ProjectViewModel(IEventDispatcher eventDispatcher)
 		{
+			_eventDispatcher = eventDispatcher;
+
 			Cards = new ObservableCollection<CardViewModel>();
 			Cards.Add(new CardViewModel());
 		}
 
 		public void Initialize()
 		{
+			_eventDispatcher.Subscribe<AddCardMessage>(this, OnAddCard);
+
 			foreach (var card in Cards)
-			{
 				card.RemoveEventHandler += OnCardRemove;
-			}
+		}
+
+		private void OnAddCard(AddCardMessage message)
+		{
+			Cards.Add(new CardViewModel());
 		}
 
 		public void AddCard()
