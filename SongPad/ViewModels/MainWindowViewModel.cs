@@ -59,8 +59,6 @@ namespace SongPad.ViewModels
 			MenuViewModel.QuitEventHandler += OnMenuQuit;
 
 			WorkspaceViewModel.SelectionChanged += OnProjectSelectionChanged;
-
-			ToolBarViewModel.AddCardEventHandler += OnToolBarAddCard;
 		}
 
 		public void Shutdown()
@@ -72,8 +70,6 @@ namespace SongPad.ViewModels
 			MenuViewModel.QuitEventHandler -= OnMenuQuit;
 
 			WorkspaceViewModel.SelectionChanged -= OnProjectSelectionChanged;
-
-			ToolBarViewModel.AddCardEventHandler -= OnToolBarAddCard;
 		}
 
 		private void OnMenuNew(object sender, EventArgs e)
@@ -102,11 +98,6 @@ namespace SongPad.ViewModels
 		private void OnProjectSelectionChanged(object sender, EventArgs e)
 		{
 			RaisePropertyChanged(nameof(Title));
-		}
-
-		private void OnToolBarAddCard(object sender, EventArgs e)
-		{
-			WorkspaceViewModel.AddCard();
 		}
 
 		private void Close()

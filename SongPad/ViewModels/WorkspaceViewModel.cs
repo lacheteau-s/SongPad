@@ -53,10 +53,5 @@ namespace SongPad.ViewModels
 			if (e.PropertyName == nameof(SelectedProject))
 				SelectionChanged?.Invoke(this, EventArgs.Empty);
 		}
-
-		public void AddCard()
-		{
-			SelectedProject?.AddCard();
-		}
 	}
 }

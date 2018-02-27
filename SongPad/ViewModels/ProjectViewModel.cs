@@ -38,11 +38,6 @@ namespace SongPad.ViewModels
 			Cards.Add(new CardViewModel());
 		}
 
-		public void AddCard()
-		{
-			Cards.Add(new CardViewModel());
-		}
-
 		private void OnCardRemove(object sender, EventArgs e)
 		{
 			var card = (CardViewModel)sender;

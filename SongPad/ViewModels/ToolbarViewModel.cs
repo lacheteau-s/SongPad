@@ -16,8 +16,6 @@ namespace SongPad.ViewModels
 
 		public ICommand AddCardCommand => new Command(OnAddCard);
 
-		public event EventHandler AddCardEventHandler;
-
 		public ToolBarViewModel(IEventDispatcher eventDispatcher)
 		{
 			_eventDispatcher = eventDispatcher;
