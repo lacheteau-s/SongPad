@@ -6,7 +6,5 @@ using System.Threading.Tasks;
 
 namespace SongPad.Messages
 {
-    public class AddCardEvent
-    {
-    }
+	public class AddCardEvent { }
 }

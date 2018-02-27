@@ -25,7 +25,7 @@ namespace SongPad.ViewModels
 
 		private void OnAddCard()
 		{
-			_eventDispatcher.Invoke<AddCardEvent>(null);
+			_eventDispatcher.Invoke<AddCardEvent>();
 		}
 	}
 }

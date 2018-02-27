@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SongPad.Messages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace SongPad.Services
 
 		private Dictionary<Type, List<Subscriber>> _subscribers = new Dictionary<Type, List<Subscriber>>();
 
-		public void Invoke<TEvent>(TEvent evt)
+		public void Invoke<TEvent>(TEvent evt = null) where TEvent : class
 		{
 			var type = typeof(TEvent);
 
@@ -34,7 +35,7 @@ namespace SongPad.Services
 			}
 		}
 
-		public void Subscribe<TEvent>(object recipient, Action<TEvent> action)
+		public void Subscribe<TEvent>(object recipient, Action<TEvent> action) where TEvent : class
 		{
 			var type = typeof(TEvent);
 
@@ -49,7 +50,7 @@ namespace SongPad.Services
 				});
 		}
 
-		public void Unsubscribe<TEvent>(object recipient)
+		public void Unsubscribe<TEvent>(object recipient) where TEvent : class
 		{
 			var type = typeof(TEvent);
 

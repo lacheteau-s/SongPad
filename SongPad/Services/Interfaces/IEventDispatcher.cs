@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SongPad.Messages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,10 @@ namespace SongPad.Services
 {
     public interface IEventDispatcher
     {
-		void Subscribe<TEvent>(object recipient, Action<TEvent> action);
+		void Invoke<TEvent>(TEvent evt = null) where TEvent : class;
 
-		void Invoke<TEvent>(TEvent evt);
+		void Subscribe<TEvent>(object recipient, Action<TEvent> action) where TEvent : class;
 
-		void Unsubscribe<TEvent>(object recipient);
+		void Unsubscribe<TEvent>(object recipient) where TEvent : class;
     }
 }
