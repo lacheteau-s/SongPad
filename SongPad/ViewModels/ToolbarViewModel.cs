@@ -1,4 +1,6 @@
-﻿using SongPad.Tools;
+﻿using SongPad.Messages;
+using SongPad.Services;
+using SongPad.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +12,18 @@ namespace SongPad.ViewModels
 {
 	public class ToolBarViewModel : BaseViewModel
 	{
+		private IEventDispatcher _eventDispatcher;
+
 		public ICommand AddCardCommand => new Command(OnAddCard);
 
-		public event EventHandler AddCardEventHandler;
+		public ToolBarViewModel(IEventDispatcher eventDispatcher)
+		{
+			_eventDispatcher = eventDispatcher;
+		}
 
 		private void OnAddCard()
 		{
-			AddCardEventHandler?.Invoke(this, EventArgs.Empty);
+			_eventDispatcher.Invoke<AddCardEvent>();
 		}
 	}
 }

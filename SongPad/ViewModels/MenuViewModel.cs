@@ -1,4 +1,6 @@
-﻿using SongPad.Tools;
+﻿using SongPad.Messages;
+using SongPad.Services;
+using SongPad.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,30 +12,33 @@ namespace SongPad.ViewModels
 {
 	public class MenuViewModel
 	{
+		private IEventDispatcher _eventDispatcher;
+
 		public ICommand NewCommand => new Command(OnNew);
 		public ICommand OpenCommand => new Command(OnOpen);
 		public ICommand SaveCommand => new Command(OnSave);
 		public ICommand QuitCommand => new Command(OnQuit);
 
-		// TODO: replace with MessagingService
-		public event EventHandler NewEventHandler;
-		public event EventHandler OpenEventHandler;
-		public event EventHandler SaveEventHandler;
 		public event EventHandler QuitEventHandler;
+
+		public MenuViewModel(IEventDispatcher eventDispatcher)
+		{
+			_eventDispatcher = eventDispatcher;
+		}
 
 		public void OnNew()
 		{
-			NewEventHandler?.Invoke(this, EventArgs.Empty);
+			_eventDispatcher.Invoke(new ProjectEvent(ProjectEvent.InstructionType.New));
 		}
 
 		public void OnOpen()
 		{
-			OpenEventHandler?.Invoke(this, EventArgs.Empty);
+			_eventDispatcher.Invoke(new ProjectEvent(ProjectEvent.InstructionType.Open));
 		}
 
 		public void OnSave()
 		{
-			SaveEventHandler?.Invoke(this, EventArgs.Empty);
+			_eventDispatcher.Invoke(new ProjectEvent(ProjectEvent.InstructionType.Save));
 		}
 
 		public void OnQuit()

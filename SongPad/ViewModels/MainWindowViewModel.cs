@@ -53,45 +53,17 @@ namespace SongPad.ViewModels
 			WorkspaceViewModel.Initialize();
 
 			// TODO: replace with messaging
-			MenuViewModel.NewEventHandler += OnMenuNew;
-			MenuViewModel.OpenEventHandler += OnMenuOpen;
-			MenuViewModel.SaveEventHandler += OnMenuSave;
 			MenuViewModel.QuitEventHandler += OnMenuQuit;
 
 			WorkspaceViewModel.SelectionChanged += OnProjectSelectionChanged;
-
-			ToolBarViewModel.AddCardEventHandler += OnToolBarAddCard;
 		}
 
 		public void Shutdown()
 		{
 			// TODO : dispose subviewmodels
-			MenuViewModel.NewEventHandler -= OnMenuNew;
-			MenuViewModel.OpenEventHandler -= OnMenuOpen;
-			MenuViewModel.SaveEventHandler -= OnMenuSave;
 			MenuViewModel.QuitEventHandler -= OnMenuQuit;
 
 			WorkspaceViewModel.SelectionChanged -= OnProjectSelectionChanged;
-
-			ToolBarViewModel.AddCardEventHandler -= OnToolBarAddCard;
-		}
-
-		private void OnMenuNew(object sender, EventArgs e)
-		{
-			var result = _dialogService.ShowDialog<NewProjectDialogViewModel>() as NewProjectDialogResult;
-
-			if (result != null)
-				WorkspaceViewModel.AddProject(result.ProjectTitle);
-		}
-
-		private void OnMenuOpen(object sender, EventArgs e)
-		{
-			throw new NotImplementedException();
-		}
-
-		private void OnMenuSave(object sender, EventArgs e)
-		{
-			throw new NotImplementedException();
 		}
 
 		private void OnMenuQuit(object sender, EventArgs e)
@@ -102,11 +74,6 @@ namespace SongPad.ViewModels
 		private void OnProjectSelectionChanged(object sender, EventArgs e)
 		{
 			RaisePropertyChanged(nameof(Title));
-		}
-
-		private void OnToolBarAddCard(object sender, EventArgs e)
-		{
-			WorkspaceViewModel.AddCard();
 		}
 
 		private void Close()

@@ -1,4 +1,6 @@
-﻿using SongPad.Tools;
+﻿using SongPad.Messages;
+using SongPad.Services;
+using SongPad.Tools;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +15,9 @@ namespace SongPad.ViewModels
 {
 	public class WorkspaceViewModel : BaseViewModel
 	{
+		private IEventDispatcher _eventDispatcher;
+		private IDialogService _dialogService;
+
 		private ProjectViewModel _selectedProject;
 
 		public ProjectViewModel SelectedProject
@@ -27,21 +32,45 @@ namespace SongPad.ViewModels
 
 		public event EventHandler SelectionChanged;
 
-		public WorkspaceViewModel()
+		public WorkspaceViewModel(IEventDispatcher eventDispatcher, IDialogService dialogService)
 		{
+			_eventDispatcher = eventDispatcher;
+			_dialogService = dialogService;
+
 			Projects = new ObservableCollection<ProjectViewModel>();
 		}
 
 		public void Initialize()
 		{
 			PropertyChanged += OnPropertyChanged; // TODO : Unsubscribe
+
+			_eventDispatcher.Subscribe<ProjectEvent>(this, OnProjectEvent); // TODO : Unsubscribe
 		}
 
-		public void AddProject(string title)
+		// BaseViewModel (Subscriber pattern ?) with an OnEvent method
+		private void OnProjectEvent(ProjectEvent evt)
 		{
+			var dict = new Dictionary<ProjectEvent.InstructionType, Action<ProjectEvent>>
+			{
+				{ ProjectEvent.InstructionType.New, AddProject }
+			};
+
+			if (!dict.ContainsKey(evt.Instruction))
+				return;
+
+			dict[evt.Instruction](evt);
+		}
+
+		public void AddProject(ProjectEvent evt)
+		{
+			var result = _dialogService.ShowDialog<NewProjectDialogViewModel>() as NewProjectDialogResult;
+
+			if (result == null)
+				return; // TODO : error
+
 			var project = IoC.GetInstance<ProjectViewModel>();
 			project.Initialize();
-			project.Title = title;
+			project.Title = result.ProjectTitle;
 
 			Projects.Add(project);
 			SelectedProject = project;
@@ -52,11 +81,6 @@ namespace SongPad.ViewModels
 		{
 			if (e.PropertyName == nameof(SelectedProject))
 				SelectionChanged?.Invoke(this, EventArgs.Empty);
-		}
-
-		public void AddCard()
-		{
-			SelectedProject?.AddCard();
 		}
 	}
 }

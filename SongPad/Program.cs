@@ -38,6 +38,8 @@ namespace SongPad
 			IoC.Register<LineViewModel>();
 
 			IoC.Register<IDialogService, DialogService>();
+
+			IoC.RegisterSingleton<IEventDispatcher, EventDispatcher>();
 		}
 
 		private static void RunApplication()
