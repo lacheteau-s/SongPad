@@ -60,7 +60,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
-    <Compile Include="Messages\AddCardEvent.cs" />
+    <Compile Include="Messages\EmptyEvents.cs" />
+    <Compile Include="Messages\ProjectEvent.cs" />
     <Compile Include="Resources\Behaviors\DoubleClickBehavior.cs" />
     <Compile Include="Resources\Behaviors\DragBehavior.cs" />
     <Compile Include="Resources\Behaviors\ResizeBehavior.cs" />

@@ -27,6 +27,7 @@ namespace SongPad.ViewModels
 
 		public void Initialize()
 		{
+			// TODO : Unsubscribe
 			_eventDispatcher.Subscribe<AddCardEvent>(this, OnAddCard);
 
 			foreach (var card in Cards)

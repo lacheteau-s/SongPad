@@ -53,9 +53,6 @@ namespace SongPad.ViewModels
 			WorkspaceViewModel.Initialize();
 
 			// TODO: replace with messaging
-			MenuViewModel.NewEventHandler += OnMenuNew;
-			MenuViewModel.OpenEventHandler += OnMenuOpen;
-			MenuViewModel.SaveEventHandler += OnMenuSave;
 			MenuViewModel.QuitEventHandler += OnMenuQuit;
 
 			WorkspaceViewModel.SelectionChanged += OnProjectSelectionChanged;
@@ -64,30 +61,9 @@ namespace SongPad.ViewModels
 		public void Shutdown()
 		{
 			// TODO : dispose subviewmodels
-			MenuViewModel.NewEventHandler -= OnMenuNew;
-			MenuViewModel.OpenEventHandler -= OnMenuOpen;
-			MenuViewModel.SaveEventHandler -= OnMenuSave;
 			MenuViewModel.QuitEventHandler -= OnMenuQuit;
 
 			WorkspaceViewModel.SelectionChanged -= OnProjectSelectionChanged;
-		}
-
-		private void OnMenuNew(object sender, EventArgs e)
-		{
-			var result = _dialogService.ShowDialog<NewProjectDialogViewModel>() as NewProjectDialogResult;
-
-			if (result != null)
-				WorkspaceViewModel.AddProject(result.ProjectTitle);
-		}
-
-		private void OnMenuOpen(object sender, EventArgs e)
-		{
-			throw new NotImplementedException();
-		}
-
-		private void OnMenuSave(object sender, EventArgs e)
-		{
-			throw new NotImplementedException();
 		}
 
 		private void OnMenuQuit(object sender, EventArgs e)
