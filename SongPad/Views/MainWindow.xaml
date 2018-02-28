@@ -32,6 +32,40 @@
 			</Menu>
 		</Border>
 
+		<!-- TOP TOOLBAR -->
+		<Border DockPanel.Dock="Top"
+				Background="{DynamicResource controlBackground}"
+				BorderThickness="1" BorderBrush="{DynamicResource borderColor}"
+				DataContext="{Binding TopToolBarViewModel}">
+			<StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+				<Button Content="{iconPacks:Material FolderPlus, Width=16, Height=16}"
+					Foreground="{DynamicResource foreground}"
+					Template="{StaticResource ImageButton}"
+					Command="{Binding NewProjectCommand}"
+					ToolTip="New project" Width="25" Height="25" Margin="2" />
+				<Button Content="{iconPacks:Material FolderOpen, Width=16, Height=16}"
+					Foreground="{DynamicResource foreground}"
+					Template="{StaticResource ImageButton}"
+					Command="{Binding OpenProjectCommand}"
+					ToolTip="Open project" Width="25" Height="25" Margin="2" />
+				<Button Content="{iconPacks:Material ContentSave, Width=16, Height=16}"
+					Foreground="{DynamicResource foreground}"
+					Template="{StaticResource ImageButton}"
+					Command="{Binding SaveProjectCommand}"
+					ToolTip="Save project" Width="25" Height="25" Margin="2" />
+				<Button Content="{iconPacks:Material ContentSaveAll, Width=16, Height=16}"
+					Foreground="{DynamicResource foreground}"
+					Template="{StaticResource ImageButton}"
+					Command="{Binding SaveAllCommand}"
+					ToolTip="Save all" Width="25" Height="25" Margin="2" />
+				<Button Content="{iconPacks:Material Export, Width=16, Height=16}"
+					Foreground="{DynamicResource foreground}"
+					Template="{StaticResource ImageButton}"
+					Command="{Binding ExportCommand}"
+					ToolTip="Save all" Width="25" Height="25" Margin="2" />
+			</StackPanel>
+		</Border>
+
 		<!-- TOOLBAR -->
 		<Border DockPanel.Dock="Left" BorderThickness="1" BorderBrush="{DynamicResource borderColor}">
 			<ToolBarTray Orientation="Vertical" Background="{DynamicResource controlBackground}">
