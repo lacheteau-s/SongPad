@@ -31,6 +31,8 @@ namespace SongPad.ViewModels
 
 		public MenuViewModel MenuViewModel { get; private set; }
 
+		public ActionMenuViewModel ActionMenuViewModel { get; private set; }
+
 		public ToolBarViewModel ToolBarViewModel { get; private set; }
 
 		public WorkspaceViewModel WorkspaceViewModel { get; private set; }
@@ -44,6 +46,7 @@ namespace SongPad.ViewModels
 			_dialogService = IoC.GetInstance<IDialogService>(); // TODO: ViewModel locator to allow passing the service in ctor
 
 			MenuViewModel = IoC.GetInstance<MenuViewModel>();
+			ActionMenuViewModel = IoC.GetInstance<ActionMenuViewModel>();
 			ToolBarViewModel = IoC.GetInstance<ToolBarViewModel>();
 			WorkspaceViewModel = IoC.GetInstance<WorkspaceViewModel>();
 		}
