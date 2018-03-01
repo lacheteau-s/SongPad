@@ -27,7 +27,7 @@ namespace SongPad
 
 			IoC.Register<MenuViewModel>();
 
-			IoC.Register<TopToolBarViewModel>();
+			IoC.Register<ActionMenuViewModel>();
 
 			IoC.Register<ToolBarViewModel>();
 

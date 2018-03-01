@@ -36,7 +36,7 @@
 		<Border DockPanel.Dock="Top"
 				Background="{DynamicResource controlBackground}"
 				BorderThickness="1" BorderBrush="{DynamicResource borderColor}"
-				DataContext="{Binding TopToolBarViewModel}">
+				DataContext="{Binding ActionMenuViewModel}">
 			<StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
 				<Button Content="{iconPacks:Material FolderPlus, Width=16, Height=16}"
 					Foreground="{DynamicResource foreground}"

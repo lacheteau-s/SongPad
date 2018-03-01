@@ -78,7 +78,7 @@
     <Compile Include="ViewModels\CardViewModel.cs" />
     <Compile Include="ViewModels\LineViewModel.cs" />
     <Compile Include="ViewModels\ToolBarViewModel.cs" />
-    <Compile Include="ViewModels\TopToolBarViewModel.cs" />
+    <Compile Include="ViewModels\ActionMenuViewModel.cs" />
     <Compile Include="ViewModels\WorkspaceViewModel.cs" />
     <Compile Include="Views\CardView.xaml.cs">
       <DependentUpon>CardView.xaml</DependentUpon>

@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace SongPad.ViewModels
 {
-	public class TopToolBarViewModel : BaseViewModel
+	public class ActionMenuViewModel : BaseViewModel
 	{
 		private IEventDispatcher _eventDispatcher;
 
@@ -20,7 +20,7 @@ namespace SongPad.ViewModels
 		public ICommand SaveAllCommand => new Command(OnSaveAllProject);
 		public ICommand ExportCommand => new Command(OnExport);
 
-		public TopToolBarViewModel(IEventDispatcher eventDispatcher)
+		public ActionMenuViewModel(IEventDispatcher eventDispatcher)
 		{
 			_eventDispatcher = eventDispatcher;
 		}
