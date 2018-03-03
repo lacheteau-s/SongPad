@@ -16,6 +16,10 @@ namespace SongPad.ViewModels
 	{
 		private IEventDispatcher _eventDispatcher;
 
+		private string _filePath;
+
+		public bool IsSaved => !string.IsNullOrEmpty(_filePath);
+
 		private bool _hasChanges;
 
 		public bool HasChanges
@@ -80,6 +84,27 @@ namespace SongPad.ViewModels
 		}
 
 		#endregion
+
+		public void Save()
+		{
+			// TODO : async
+			if (!HasChanges)
+				return;
+
+			if (!IsSaved)
+			{
+				// Select destination popup
+				// Fill out project path
+				// Create file here ?
+			}
+
+			// In case of error: first, make a duplicate of the file
+			// Serialize project
+			// Write to file
+			// In case of error: delete file if new or rewrite old file
+
+			HasChanges = false;
+		}
 
 		private void AddCard()
 		{

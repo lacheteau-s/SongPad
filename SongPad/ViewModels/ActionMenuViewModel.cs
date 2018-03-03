@@ -37,7 +37,7 @@ namespace SongPad.ViewModels
 
 		private void OnSaveProject()
 		{
-
+			_eventDispatcher.Invoke(new ProjectEvent(ProjectEvent.InstructionType.Save));
 		}
 
 		private void OnSaveAllProject()

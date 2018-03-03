@@ -82,7 +82,8 @@ namespace SongPad.ViewModels
 		{
 			var dict = new Dictionary<ProjectEvent.InstructionType, Action<ProjectEvent>>
 			{
-				{ ProjectEvent.InstructionType.New, AddProject }
+				{ ProjectEvent.InstructionType.New, AddProject },
+				{ ProjectEvent.InstructionType.Save, SaveCurrentProject }
 			};
 
 			if (!dict.ContainsKey(evt.Instruction))
@@ -91,7 +92,7 @@ namespace SongPad.ViewModels
 			dict[evt.Instruction](evt);
 		}
 
-		public void AddProject(ProjectEvent evt)
+		private void AddProject(ProjectEvent evt)
 		{
 			var result = _dialogService.ShowDialog<NewProjectDialogViewModel>() as NewProjectDialogResult;
 
@@ -105,6 +106,12 @@ namespace SongPad.ViewModels
 			Projects.Add(project);
 			SelectedProject = project;
 			RaisePropertyChanged(nameof(HasItems));
+		}
+
+		private void SaveCurrentProject(ProjectEvent evt)
+		{
+			// TODO : async
+			SelectedProject.Save();
 		}
 
 		private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
