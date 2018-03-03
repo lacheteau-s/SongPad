@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace SongPad.ViewModels
 {
-	public class MenuViewModel
+	public class MenuViewModel : BaseViewModel
 	{
 		private IEventDispatcher _eventDispatcher;
 

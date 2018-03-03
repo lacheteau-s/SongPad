@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SongPad.Services
@@ -57,7 +58,7 @@ namespace SongPad.Services
 			if (_subscribers.ContainsKey(type))
 			{
 				var receivers = _subscribers[type];
-				var toRemove = receivers.Where(m => m.Target.TryGetTarget(out object obj) ? (obj == recipient) : false);
+				var toRemove = receivers.Where(m => m.Target.TryGetTarget(out object obj) ? (obj == recipient) : false).ToList();
 
 				foreach (var obj in toRemove)
 					receivers.Remove(obj);

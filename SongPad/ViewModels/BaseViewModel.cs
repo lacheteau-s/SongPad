@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SongPad.Tools;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,23 +9,26 @@ using System.Threading.Tasks;
 
 namespace SongPad.ViewModels
 {
-	public class BaseViewModel : INotifyPropertyChanged
+	public abstract class BaseViewModel : ObservableObject
 	{
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+		public virtual void Initialize()
 		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+			Subscribe();
 		}
 
-		protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+		public virtual void Cleanup()
 		{
-			if (Equals(field, value))
-				return false;
+			Unsubscribe();
+		}
 
-			field = value;
-			RaisePropertyChanged(propertyName);
-			return true;
+		protected virtual void Subscribe()
+		{
+
+		}
+
+		protected virtual void Unsubscribe()
+		{
+
 		}
 	}
 }

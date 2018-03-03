@@ -38,14 +38,33 @@ namespace SongPad.ViewModels
 
 		public CardViewModel()
 		{
-			Title = "Untitled";
-			Lines = new ObservableCollection<LineViewModel>();
 		}
 
-		public void RemoveLines(LineViewModel[] items)
+		public override void Initialize()
 		{
-			foreach (var item in items)
-				Lines.Remove(item);
+			Title = "Untitled";
+			Lines = new ObservableCollection<LineViewModel>();
+
+			base.Initialize();
+		}
+
+		public override void Cleanup()
+		{
+			base.Cleanup();
+
+			foreach (var line in Lines)
+				line.Cleanup();
+
+			Lines.Clear();
+		}
+
+		public void RemoveLines(LineViewModel[] lines)
+		{
+			foreach (var line in lines)
+			{
+				line.Cleanup();
+				Lines.Remove(line);
+			}
 		}
 
 		public void MoveLinesUp(LineViewModel[] items)
@@ -77,6 +96,8 @@ namespace SongPad.ViewModels
 		private void OnAdd()
 		{
 			var line = IoC.GetInstance<LineViewModel>();
+
+			line.Initialize();
 			line.Line = $"Test {Lines.Count + 1}";
 			Lines.Add(line);
 		}

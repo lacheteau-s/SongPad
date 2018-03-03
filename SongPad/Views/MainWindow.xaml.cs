@@ -41,7 +41,7 @@ namespace SongPad.Views
 			base.OnClosing(e);
 
 			ViewModel.CloseWindow -= OnClose;
-			ViewModel.Shutdown();
+			ViewModel.Cleanup();
 		}
 
 		private void OnClose(object sender, EventArgs e)
