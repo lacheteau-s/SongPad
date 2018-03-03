@@ -38,6 +38,8 @@ namespace SongPad.ViewModels
 			_dialogService = dialogService;
 		}
 
+		#region Lifecycle
+
 		public override void Initialize()
 		{
 			Projects = new ObservableCollection<ProjectViewModel>();
@@ -72,6 +74,8 @@ namespace SongPad.ViewModels
 
 			_eventDispatcher.Unsubscribe<ProjectEvent>(this);
 		}
+
+		#endregion
 
 		// BaseViewModel (Subscriber pattern ?) with an OnEvent method
 		private void OnProjectEvent(ProjectEvent evt)

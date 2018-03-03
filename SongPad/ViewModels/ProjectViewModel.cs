@@ -7,6 +7,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+using System.ComponentModel;
 
 namespace SongPad.ViewModels
 {
@@ -14,15 +16,30 @@ namespace SongPad.ViewModels
 	{
 		private IEventDispatcher _eventDispatcher;
 
-		public string Title { get; set; }
+		private bool _hasChanges;
+
+		public bool HasChanges
+		{
+			get { return _hasChanges; }
+			set { SetProperty(ref _hasChanges, value); }
+		}
+
+		private string _title;
+
+		public string Title
+		{
+			get { return $"{_title}{(_hasChanges ? "*" : string.Empty)}"; }
+			set { SetProperty(ref _title, value); }
+		}
 
 		public ObservableCollection<CardViewModel> Cards { get; set; }
 
 		public ProjectViewModel(IEventDispatcher eventDispatcher)
 		{
 			_eventDispatcher = eventDispatcher;
-
 		}
+
+		#region Lifecycle
 
 		public override void Initialize()
 		{
@@ -62,6 +79,8 @@ namespace SongPad.ViewModels
 			_eventDispatcher.Unsubscribe<AddCardEvent>(this);
 		}
 
+		#endregion
+
 		private void AddCard()
 		{
 			var card = IoC.GetInstance<CardViewModel>();
@@ -81,11 +100,18 @@ namespace SongPad.ViewModels
 		private void OnAddCard(AddCardEvent message)
 		{
 			AddCard();
+			HasChanges = true;
 		}
 
 		private void OnRemoveCard(object sender, EventArgs e)
 		{
 			RemoveCard((CardViewModel)sender);
+			HasChanges = true;
+		}
+
+		protected override void RegisterDependencies()
+		{
+			RegisterDependency(nameof(HasChanges), nameof(Title));
 		}
 	}
 }
