@@ -73,6 +73,7 @@
     </Compile>
     <Compile Include="Services\Implementations\EventDispatcher.cs" />
     <Compile Include="Services\Interfaces\IEventDispatcher.cs" />
+    <Compile Include="Tools\ObservableObject.cs" />
     <Compile Include="Tools\SystemMenuManager.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CardViewModel.cs" />
