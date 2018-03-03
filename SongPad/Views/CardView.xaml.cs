@@ -28,6 +28,7 @@ namespace SongPad.Views
 			InitializeComponent();
 		}
 
+		// TODO : Commands
 		private void OnHeaderDoubleClick(object sender, MouseButtonEventArgs e)
 		{
 			ViewModel.IsEditingTitle = true;

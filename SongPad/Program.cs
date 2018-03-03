@@ -37,6 +37,8 @@ namespace SongPad
 
 			IoC.Register<NewProjectDialogViewModel>();
 
+			IoC.Register<CardViewModel>();
+
 			IoC.Register<LineViewModel>();
 
 			IoC.Register<IDialogService, DialogService>();

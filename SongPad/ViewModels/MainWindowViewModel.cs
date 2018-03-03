@@ -51,21 +51,39 @@ namespace SongPad.ViewModels
 			WorkspaceViewModel = IoC.GetInstance<WorkspaceViewModel>();
 		}
 
-		public void Initialize()
+		public override void Initialize()
 		{
+			MenuViewModel.Initialize();
+			ActionMenuViewModel.Initialize();
+			ToolBarViewModel.Initialize();
 			WorkspaceViewModel.Initialize();
 
-			// TODO: replace with messaging
-			MenuViewModel.QuitEventHandler += OnMenuQuit;
+			base.Initialize();
+		}
 
+		public override void Cleanup()
+		{
+			base.Cleanup();
+
+			MenuViewModel.Cleanup();
+			ActionMenuViewModel.Cleanup();
+			ToolBarViewModel.Cleanup();
+			WorkspaceViewModel.Cleanup();
+		}
+
+		protected override void Subscribe()
+		{
+			base.Subscribe();
+
+			MenuViewModel.QuitEventHandler += OnMenuQuit;
 			WorkspaceViewModel.SelectionChanged += OnProjectSelectionChanged;
 		}
 
-		public void Shutdown()
+		protected override void Unsubscribe()
 		{
-			// TODO : dispose subviewmodels
-			MenuViewModel.QuitEventHandler -= OnMenuQuit;
+			base.Unsubscribe();
 
+			MenuViewModel.QuitEventHandler -= OnMenuQuit;
 			WorkspaceViewModel.SelectionChanged -= OnProjectSelectionChanged;
 		}
 

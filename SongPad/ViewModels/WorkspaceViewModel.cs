@@ -28,7 +28,7 @@ namespace SongPad.ViewModels
 
 		public ObservableCollection<ProjectViewModel> Projects { get; set; }
 
-		public bool HasItems => Projects.Count > 0;
+		public bool HasItems => Projects?.Count > 0;
 
 		public event EventHandler SelectionChanged;
 
@@ -36,15 +36,41 @@ namespace SongPad.ViewModels
 		{
 			_eventDispatcher = eventDispatcher;
 			_dialogService = dialogService;
-
-			Projects = new ObservableCollection<ProjectViewModel>();
 		}
 
-		public void Initialize()
+		public override void Initialize()
 		{
-			PropertyChanged += OnPropertyChanged; // TODO : Unsubscribe
+			Projects = new ObservableCollection<ProjectViewModel>();
 
-			_eventDispatcher.Subscribe<ProjectEvent>(this, OnProjectEvent); // TODO : Unsubscribe
+			base.Initialize();
+		}
+
+		public override void Cleanup()
+		{
+			base.Cleanup();
+
+			foreach (var project in Projects)
+				project.Cleanup();
+
+			Projects.Clear();
+		}
+
+		protected override void Subscribe()
+		{
+			base.Subscribe();
+
+			PropertyChanged += OnPropertyChanged;
+
+			_eventDispatcher.Subscribe<ProjectEvent>(this, OnProjectEvent);
+		}
+
+		protected override void Unsubscribe()
+		{
+			base.Unsubscribe();
+
+			PropertyChanged -= OnPropertyChanged;
+
+			_eventDispatcher.Unsubscribe<ProjectEvent>(this);
 		}
 
 		// BaseViewModel (Subscriber pattern ?) with an OnEvent method
