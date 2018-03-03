@@ -44,6 +44,8 @@ namespace SongPad
 			IoC.Register<IDialogService, DialogService>();
 
 			IoC.RegisterSingleton<IEventDispatcher, EventDispatcher>();
+
+			IoC.Register<SgpExporter>();
 		}
 
 		private static void RunApplication()
