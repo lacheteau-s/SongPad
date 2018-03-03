@@ -11,10 +11,22 @@ namespace SongPad.ViewModels
 {
 	public abstract class BaseViewModel : ObservableObject
 	{
-
+		public virtual void Initialize()
 		{
+			Subscribe();
 		}
 
+		public virtual void Cleanup()
+		{
+			Unsubscribe();
+		}
+
+		protected virtual void Subscribe()
+		{
+
+		}
+
+		protected virtual void Unsubscribe()
 		{
 
 		}
