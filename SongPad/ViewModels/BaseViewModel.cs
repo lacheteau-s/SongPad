@@ -13,6 +13,7 @@ namespace SongPad.ViewModels
 	{
 		public virtual void Initialize()
 		{
+			RegisterDependencies();
 			Subscribe();
 		}
 
@@ -27,6 +28,11 @@ namespace SongPad.ViewModels
 		}
 
 		protected virtual void Unsubscribe()
+		{
+
+		}
+
+		protected virtual void RegisterDependencies()
 		{
 
 		}
