@@ -12,6 +12,8 @@ using System.ComponentModel;
 using Microsoft.Win32;
 using System.IO;
 using SongPad.Helpers;
+using SongPad.DTO;
+using System.Xml.Serialization;
 
 namespace SongPad.ViewModels
 {
@@ -53,6 +55,13 @@ namespace SongPad.ViewModels
 		}
 
 		#region Lifecycle
+
+		public void Initialize(string path)
+		{
+			Open(path);
+
+			base.Initialize();
+		}
 
 		public override void Initialize()
 		{
@@ -104,7 +113,7 @@ namespace SongPad.ViewModels
 
 			if (!IsSaved)
 			{
-				var result = (SaveFileDialogResult)_dialogService.ShowSaveFileDialog(PROJECT_FORMAT_FILTER, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+				var result = (FileDialogResult)_dialogService.SaveFileDialog(PROJECT_FORMAT_FILTER, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
 
 				if (!result.IsOk) // Select destination popup
 					return;
@@ -116,6 +125,40 @@ namespace SongPad.ViewModels
 			_sgpExporter.Export(_filePath, this.ToDTO()); // async + try/catch
 
 			HasChanges = false;
+		}
+
+		public void Open(string path)
+		{
+			_filePath = path;
+
+			// handle exceptions
+			using (var stream = File.OpenRead(_filePath))
+			{
+				var serializer = new XmlSerializer(typeof(ProjectDTO));
+
+				var project = (ProjectDTO)serializer.Deserialize(stream);
+
+				Title = project.Title;
+				Cards = new ObservableCollection<CardViewModel>(project.Cards.Select(c =>
+				{
+					var card = IoC.GetInstance<CardViewModel>();
+
+					card.Initialize();
+					card.Title = c.Title;
+					card.RemoveEventHandler += OnRemoveCard;
+					card.Lines = new ObservableCollection<LineViewModel>(c.Lines.Select(l =>
+					{
+						var line = IoC.GetInstance<LineViewModel>();
+
+						line.Initialize();
+						line.Line = l;
+
+						return line;
+					}).ToList());
+
+					return card;
+				}).ToList());
+			}
 		}
 
 		private void AddCard()
