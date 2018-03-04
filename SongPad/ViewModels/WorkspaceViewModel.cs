@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace SongPad.ViewModels
 {
@@ -31,6 +32,8 @@ namespace SongPad.ViewModels
 		public bool HasItems => Projects?.Count > 0;
 
 		public event EventHandler SelectionChanged;
+
+		public ICommand CloseProjectCommand => new Command(OnCloseProject);
 
 		public WorkspaceViewModel(IEventDispatcher eventDispatcher, IDialogService dialogService)
 		{
@@ -80,7 +83,7 @@ namespace SongPad.ViewModels
 		// BaseViewModel (Subscriber pattern ?) with an OnEvent method
 		private void OnProjectEvent(ProjectEvent evt)
 		{
-			var dict = new Dictionary<ProjectEvent.InstructionType, Action<ProjectEvent>>
+			var dict = new Dictionary<ProjectEvent.InstructionType, Action>
 			{
 				{ ProjectEvent.InstructionType.New, AddProject },
 				{ ProjectEvent.InstructionType.Save, SaveCurrentProject }
@@ -89,10 +92,10 @@ namespace SongPad.ViewModels
 			if (!dict.ContainsKey(evt.Instruction))
 				return;
 
-			dict[evt.Instruction](evt);
+			dict[evt.Instruction]();
 		}
 
-		private void AddProject(ProjectEvent evt)
+		private void AddProject()
 		{
 			var result = _dialogService.ShowDialog<NewProjectDialogViewModel>() as NewProjectDialogResult;
 
@@ -108,7 +111,7 @@ namespace SongPad.ViewModels
 			RaisePropertyChanged(nameof(HasItems));
 		}
 
-		private void SaveCurrentProject(ProjectEvent evt)
+		private void SaveCurrentProject()
 		{
 			// TODO : async
 			SelectedProject.Save();
@@ -118,6 +121,24 @@ namespace SongPad.ViewModels
 		{
 			if (e.PropertyName == nameof(SelectedProject))
 				SelectionChanged?.Invoke(this, EventArgs.Empty);
+		}
+
+		private void OnCloseProject(object parameter)
+		{
+			var project = (ProjectViewModel)parameter;
+
+			if (project.HasChanges)
+			{
+				var result = _dialogService.ShowDialog($"Project \"{project.Title.TrimEnd('*')}\" has been modified.{Environment.NewLine}{Environment.NewLine}Do you want to save the changes ?", "Save changes ?", DialogButton.YesNoCancel, DialogImage.Question);
+
+				if (result == DialogResult.Yes)
+					project.Save();
+				else if (result == DialogResult.Cancel)
+					return;
+			}
+
+			project.Cleanup();
+			Projects.Remove(project);
 		}
 	}
 }
