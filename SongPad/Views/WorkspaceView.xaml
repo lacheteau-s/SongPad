@@ -7,18 +7,21 @@
 			 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
 			 xmlns:viewmodels="clr-namespace:SongPad.ViewModels"
 			 xmlns:views="clr-namespace:SongPad.Views"
-             mc:Ignorable="d" 
+             xmlns:converters="clr-namespace:SongPad.Converters"
+			 mc:Ignorable="d" 
 			 d:DataContext="{d:DesignInstance viewmodels:WorkspaceViewModel}"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+			 x:Name="root">
 	<UserControl.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="/SongPad;component/Resources/Templates/Button.xaml" />
 			</ResourceDictionary.MergedDictionaries>
+			<converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 		</ResourceDictionary>
 	</UserControl.Resources>
 	<Grid>
-		<TabControl ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject, Mode=TwoWay}">
+		<TabControl ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject, Mode=TwoWay}" Visibility="{Binding SelectedProject, Converter={StaticResource NullToVisibilityConverter}}">
 			<TabControl.Style>
 				<Style TargetType="TabControl">
 					<Setter Property="Template">
@@ -82,7 +85,9 @@
 						<TextBlock Text="{Binding Title}" Foreground="{DynamicResource foreground}" VerticalAlignment="Center" />
 						<Button Template="{StaticResource ImageButton}"
 								Content="{iconPacks:Material Close, Width=8, Height=8}"
-								Foreground="{DynamicResource foreground}" Margin="10,0,0,0" Height="16" Width="16">
+								Foreground="{DynamicResource foreground}"
+								Command="{Binding ElementName=root, Path=DataContext.CloseProjectCommand}"
+								CommandParameter="{Binding}" Margin="10,0,0,0" Height="16" Width="16">
 						</Button>
 					</StackPanel>
 				</DataTemplate>
