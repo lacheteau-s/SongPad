@@ -9,12 +9,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
+using Microsoft.Win32;
+using System.IO;
+using SongPad.Helpers;
 
 namespace SongPad.ViewModels
 {
 	public class ProjectViewModel : BaseViewModel
 	{
 		private IEventDispatcher _eventDispatcher;
+		private IDialogService _dialogService;
+		private IExporter _sgpExporter;
+
+		private readonly string PROJECT_FORMAT_FILTER = "SongPad file (*.sgp)|*.sgp";
 
 		private string _filePath;
 
@@ -38,9 +45,11 @@ namespace SongPad.ViewModels
 
 		public ObservableCollection<CardViewModel> Cards { get; set; }
 
-		public ProjectViewModel(IEventDispatcher eventDispatcher)
+		public ProjectViewModel(IEventDispatcher eventDispatcher, IDialogService dialogService)
 		{
 			_eventDispatcher = eventDispatcher;
+			_dialogService = dialogService;
+			_sgpExporter = IoC.GetInstance<SgpExporter>();
 		}
 
 		#region Lifecycle
@@ -87,21 +96,22 @@ namespace SongPad.ViewModels
 
 		public void Save()
 		{
-			// TODO : async
-			if (!HasChanges)
+			// TODO : async + IsSaving to prevent saving again if the previous save isn't complete
+			if (!HasChanges && IsSaved)
 				return;
 
 			if (!IsSaved)
 			{
-				// Select destination popup
-				// Fill out project path
-				// Create file here ?
+				var result = (SaveFileDialogResult)_dialogService.ShowSaveFileDialog(PROJECT_FORMAT_FILTER, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+
+				if (!result.IsOk) // Select destination popup
+					return;
+
+				_filePath = result.FilePath; // Fill out project path
 			}
 
-			// In case of error: first, make a duplicate of the file
-			// Serialize project
-			// Write to file
-			// In case of error: delete file if new or rewrite old file
+			Title = Path.GetFileName(_filePath); // Edit title to match file
+			_sgpExporter.Export(_filePath, this.ToDTO()); // async + try/catch
 
 			HasChanges = false;
 		}
