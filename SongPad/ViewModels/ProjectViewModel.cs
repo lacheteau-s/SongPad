@@ -12,6 +12,8 @@ using System.ComponentModel;
 using Microsoft.Win32;
 using System.IO;
 using SongPad.Helpers;
+using SongPad.DTO;
+using System.Xml.Serialization;
 
 namespace SongPad.ViewModels
 {
@@ -19,13 +21,13 @@ namespace SongPad.ViewModels
 	{
 		private IEventDispatcher _eventDispatcher;
 		private IDialogService _dialogService;
-		private IExporter _sgpExporter;
+		private ISerializer _sgpSerializer;
 
 		private readonly string PROJECT_FORMAT_FILTER = "SongPad file (*.sgp)|*.sgp";
 
-		private string _filePath;
+		public string FilePath { get; set; }
 
-		public bool IsSaved => !string.IsNullOrEmpty(_filePath);
+		public bool IsSaved => !string.IsNullOrEmpty(FilePath);
 
 		private bool _hasChanges;
 
@@ -49,10 +51,29 @@ namespace SongPad.ViewModels
 		{
 			_eventDispatcher = eventDispatcher;
 			_dialogService = dialogService;
-			_sgpExporter = IoC.GetInstance<SgpExporter>();
+			_sgpSerializer = IoC.GetInstance<SgpSerializer>();
 		}
 
 		#region Lifecycle
+
+		public void Initialize(ProjectDTO dto)
+		{
+			FilePath = dto.FilePath;
+			Title = dto.Title;
+			Cards = new ObservableCollection<CardViewModel>(dto.Cards.Select(c =>
+			{
+				var vm = IoC.GetInstance<CardViewModel>();
+
+				vm.Title = c.Title;
+				vm.Initialize(c);
+				vm.RemoveEventHandler += OnRemoveCard;
+
+				return vm;
+
+			}).ToList());
+
+			base.Initialize();
+		}
 
 		public override void Initialize()
 		{
@@ -104,16 +125,16 @@ namespace SongPad.ViewModels
 
 			if (!IsSaved)
 			{
-				var result = (SaveFileDialogResult)_dialogService.ShowSaveFileDialog(PROJECT_FORMAT_FILTER, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+				var result = (FileDialogResult)_dialogService.SaveFileDialog(PROJECT_FORMAT_FILTER, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
 
 				if (!result.IsOk) // Select destination popup
 					return;
 
-				_filePath = result.FilePath; // Fill out project path
+				FilePath = result.FilePath; // Fill out project path
 			}
 
-			Title = Path.GetFileName(_filePath); // Edit title to match file
-			_sgpExporter.Export(_filePath, this.ToDTO()); // async + try/catch
+			Title = Path.GetFileName(FilePath); // Edit title to match file
+			_sgpSerializer.Export(FilePath, this.ToDTO()); // async + try/catch
 
 			HasChanges = false;
 		}

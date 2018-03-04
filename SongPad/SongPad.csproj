@@ -75,9 +75,9 @@
       <DependentUpon>EditableLabel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\Implementations\EventDispatcher.cs" />
-    <Compile Include="Services\Implementations\SgpExporter.cs" />
+    <Compile Include="Services\Implementations\SgpSerializer.cs" />
     <Compile Include="Services\Interfaces\IEventDispatcher.cs" />
-    <Compile Include="Services\Interfaces\IExporter.cs" />
+    <Compile Include="Services\Interfaces\ISerializer.cs" />
     <Compile Include="Tools\ObservableObject.cs" />
     <Compile Include="Tools\SystemMenuManager.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />

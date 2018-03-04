@@ -16,13 +16,13 @@ namespace SongPad.Messages
 		}
 	}
 
-	public class SaveFileDialogResult : IDialogResult
+	public class FileDialogResult : IDialogResult
 	{
 		public bool IsOk { get; set; }
 
 		public string FilePath { get; set; }
 
-		public SaveFileDialogResult(bool isOk, string filePath)
+		public FileDialogResult(bool isOk, string filePath)
 		{
 			IsOk = isOk;
 			FilePath = filePath;

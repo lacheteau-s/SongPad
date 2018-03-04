@@ -15,6 +15,7 @@ namespace SongPad.Helpers
 		{
 			var dto = new ProjectDTO();
 
+			dto.FilePath = project.FilePath;
 			dto.Title = project.Title.TrimEnd('*');
 			dto.Cards = project.Cards.Select(c => c.ToDTO()).ToArray();
 

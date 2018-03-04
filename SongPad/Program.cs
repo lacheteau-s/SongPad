@@ -45,7 +45,7 @@ namespace SongPad
 
 			IoC.RegisterSingleton<IEventDispatcher, EventDispatcher>();
 
-			IoC.Register<SgpExporter>();
+			IoC.Register<SgpSerializer>();
 		}
 
 		private static void RunApplication()

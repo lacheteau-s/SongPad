@@ -1,16 +1,19 @@
-﻿using SongPad.Messages;
+﻿using SongPad.DTO;
+using SongPad.Messages;
 using SongPad.Services;
 using SongPad.Tools;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Xml.Serialization;
 
 namespace SongPad.ViewModels
 {
@@ -18,6 +21,9 @@ namespace SongPad.ViewModels
 	{
 		private IEventDispatcher _eventDispatcher;
 		private IDialogService _dialogService;
+		private ISerializer _sgpSerializer;
+
+		private readonly string PROJECT_FORMAT_FILTER = "SongPad file (*.sgp)|*.sgp";
 
 		private ProjectViewModel _selectedProject;
 
@@ -39,6 +45,7 @@ namespace SongPad.ViewModels
 		{
 			_eventDispatcher = eventDispatcher;
 			_dialogService = dialogService;
+			_sgpSerializer = IoC.GetInstance<SgpSerializer>();
 		}
 
 		#region Lifecycle
@@ -86,7 +93,8 @@ namespace SongPad.ViewModels
 			var dict = new Dictionary<ProjectEvent.InstructionType, Action>
 			{
 				{ ProjectEvent.InstructionType.New, AddProject },
-				{ ProjectEvent.InstructionType.Save, SaveCurrentProject }
+				{ ProjectEvent.InstructionType.Save, SaveCurrentProject },
+				{ ProjectEvent.InstructionType.Open, OpenProject }
 			};
 
 			if (!dict.ContainsKey(evt.Instruction))
@@ -108,6 +116,23 @@ namespace SongPad.ViewModels
 
 			Projects.Add(project);
 			SelectedProject = project;
+			RaisePropertyChanged(nameof(HasItems));
+		}
+
+		private void OpenProject()
+		{
+			var result = (FileDialogResult)_dialogService.OpenFileDialog(PROJECT_FORMAT_FILTER, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+
+			if (!result.IsOk)
+				return;
+
+			var project = _sgpSerializer.Import(result.FilePath);
+			var vm = IoC.GetInstance<ProjectViewModel>();
+
+			vm.Initialize(project);
+
+			Projects.Add(vm);
+			SelectedProject = vm;
 			RaisePropertyChanged(nameof(HasItems));
 		}
 

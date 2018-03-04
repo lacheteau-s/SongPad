@@ -57,7 +57,7 @@ namespace SongPad.Services
 			return viewModel.Result;
 		}
 
-		public IDialogResult ShowSaveFileDialog(string filter, string initialDirectory)
+		public IDialogResult SaveFileDialog(string filter, string initialDirectory)
 		{
 			var dialog = new SaveFileDialog();
 
@@ -66,7 +66,20 @@ namespace SongPad.Services
 
 			var result = dialog.ShowDialog();
 
-			return new SaveFileDialogResult(result.Value, dialog.FileName);
+			return new FileDialogResult(result.Value, dialog.FileName);
+		}
+
+		public IDialogResult OpenFileDialog(string filter, string initialDirectory)
+		{
+			var dialog = new OpenFileDialog();
+
+			dialog.Multiselect = true;
+			dialog.Filter = filter;
+			dialog.InitialDirectory = initialDirectory;
+
+			var result = dialog.ShowDialog();
+
+			return new FileDialogResult(result.Value, dialog.FileName);
 		}
 
 		public void ShowErrorDialog(string error)

@@ -11,7 +11,7 @@ using System.Xml.Serialization;
 
 namespace SongPad.Services
 {
-	public class SgpExporter : IExporter
+	public class SgpSerializer : ISerializer
 	{
 		public void Export(string path, ProjectDTO project)
 		{
@@ -28,6 +28,19 @@ namespace SongPad.Services
 
 			if (!string.IsNullOrWhiteSpace(backup))
 				File.Delete(backup); // TODO : In case of error: rewrite old file
+		}
+
+		public ProjectDTO Import(string path)
+		{
+			ProjectDTO project = null;
+
+			using (var stream = File.OpenRead(path))
+			{
+				var serializer = new XmlSerializer(typeof(ProjectDTO));
+				project = (ProjectDTO)serializer.Deserialize(stream);
+			}
+
+			return project;
 		}
 
 		private string BackupIfExists(string path)

@@ -1,4 +1,5 @@
-﻿using SongPad.Messages;
+﻿using SongPad.DTO;
+using SongPad.Messages;
 using SongPad.Services;
 using SongPad.Tools;
 using System;
@@ -43,6 +44,23 @@ namespace SongPad.ViewModels
 		public CardViewModel(IEventDispatcher eventDispatcher)
 		{
 			_eventDispatcher = eventDispatcher;
+		}
+
+		public void Initialize(CardDTO dto)
+		{
+			Title = dto.Title;
+			Lines = new ObservableCollection<LineViewModel>(dto.Lines.Select(l =>
+			{
+				var vm = IoC.GetInstance<LineViewModel>();
+
+				vm.Line = l;
+				vm.Initialize();
+
+				return vm;
+
+			}).ToList());
+
+			base.Initialize();
 		}
 
 		public override void Initialize()
