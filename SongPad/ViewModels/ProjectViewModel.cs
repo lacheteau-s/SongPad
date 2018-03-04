@@ -80,6 +80,7 @@ namespace SongPad.ViewModels
 				card.RemoveEventHandler += OnRemoveCard;
 
 			_eventDispatcher.Subscribe<AddCardEvent>(this, OnAddCard);
+			_eventDispatcher.Subscribe<ProjectChangedEvent>(this, OnChange);
 		}
 
 		protected override void Unsubscribe()
@@ -90,6 +91,7 @@ namespace SongPad.ViewModels
 				card.RemoveEventHandler -= OnRemoveCard;
 
 			_eventDispatcher.Unsubscribe<AddCardEvent>(this);
+			_eventDispatcher.Unsubscribe<ProjectChangedEvent>(this);
 		}
 
 		#endregion
@@ -141,6 +143,11 @@ namespace SongPad.ViewModels
 		private void OnRemoveCard(object sender, EventArgs e)
 		{
 			RemoveCard((CardViewModel)sender);
+			HasChanges = true;
+		}
+
+		private void OnChange(ProjectChangedEvent evt)
+		{
 			HasChanges = true;
 		}
 

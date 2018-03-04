@@ -1,4 +1,6 @@
-﻿using SongPad.Tools;
+﻿using SongPad.Messages;
+using SongPad.Services;
+using SongPad.Tools;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +15,8 @@ namespace SongPad.ViewModels
 {
     public class CardViewModel : BaseViewModel
     {
+		private IEventDispatcher _eventDispatcher;
+
 		private string _title;
 
 		public string Title
@@ -31,13 +35,14 @@ namespace SongPad.ViewModels
 
 		public ObservableCollection<LineViewModel> Lines { get; set; }
 
-		public ICommand AddCommand => new Command(OnAdd);
-		public ICommand RemoveCommand => new Command(OnRemove);
+		public ICommand AddLineCommand => new Command(OnAddLine);
+		public ICommand RemoveCardCommand => new Command(OnRemoveCard);
 
 		public event EventHandler RemoveEventHandler;
 
-		public CardViewModel()
+		public CardViewModel(IEventDispatcher eventDispatcher)
 		{
+			_eventDispatcher = eventDispatcher;
 		}
 
 		public override void Initialize()
@@ -65,6 +70,8 @@ namespace SongPad.ViewModels
 				line.Cleanup();
 				Lines.Remove(line);
 			}
+
+			_eventDispatcher.Invoke<ProjectChangedEvent>();
 		}
 
 		public void MoveLinesUp(LineViewModel[] items)
@@ -78,6 +85,8 @@ namespace SongPad.ViewModels
 				else if (i > 0 && indexes[i] > (indexes[i - 1] + 1))
 					Lines.Move(indexes[i], --indexes[i]);
 			}
+
+			_eventDispatcher.Invoke<ProjectChangedEvent>();
 		}
 
 		public void MoveLinesDown(LineViewModel[] items)
@@ -91,18 +100,22 @@ namespace SongPad.ViewModels
 				else if (i > 0 && indexes[i] < (indexes[i - 1] - 1))
 					Lines.Move(indexes[i], ++indexes[i]);
 			}
+
+			_eventDispatcher.Invoke<ProjectChangedEvent>();
 		}
 
-		private void OnAdd()
+		private void OnAddLine()
 		{
 			var line = IoC.GetInstance<LineViewModel>();
 
 			line.Initialize();
 			line.Line = $"Test {Lines.Count + 1}";
 			Lines.Add(line);
+
+			_eventDispatcher.Invoke<ProjectChangedEvent>();
 		}
 
-		private void OnRemove()
+		private void OnRemoveCard()
 		{
 			// TODO : Clear lines
 			RemoveEventHandler?.Invoke(this, EventArgs.Empty);

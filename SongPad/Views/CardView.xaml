@@ -44,7 +44,7 @@
 				</Grid>
 			</Label>
 			<Button Grid.Column="1" Foreground="{DynamicResource foreground}" Margin="0,5"
-					Command="{Binding AddCommand}"
+					Command="{Binding AddLineCommand}"
 					Template="{StaticResource ImageButton}"
 					Content="{iconPacks:Material Plus, Width=12, Height=12}" />
 
@@ -53,7 +53,7 @@
 					Content="{iconPacks:Material LockOpen, Width=12, Height=12}" />
 
 			<Button Grid.Column="3" Foreground="{DynamicResource foreground}" Margin="0,5"
-					Command="{Binding RemoveCommand}"
+					Command="{Binding RemoveCardCommand}"
 					Template="{StaticResource ImageButton}"
 					Content="{iconPacks:Material Delete, Width=12, Height=12}" />
 
