@@ -15,4 +15,17 @@ namespace SongPad.Messages
 			ProjectTitle = projectTitle;
 		}
 	}
+
+	public class SaveFileDialogResult : IDialogResult
+	{
+		public bool IsOk { get; set; }
+
+		public string FilePath { get; set; }
+
+		public SaveFileDialogResult(bool isOk, string filePath)
+		{
+			IsOk = isOk;
+			FilePath = filePath;
+		}
+	}
 }

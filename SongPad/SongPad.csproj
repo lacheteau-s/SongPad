@@ -98,7 +98,7 @@
     </Page>
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Messages\IDialogResult.cs" />
-    <Compile Include="Messages\NewProjectDialogResult.cs" />
+    <Compile Include="Messages\DialogResults.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Services\Implementations\DialogService.cs" />
     <Compile Include="Services\Interfaces\IDialogService.cs" />

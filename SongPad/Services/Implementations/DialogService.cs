@@ -1,4 +1,5 @@
-﻿using SongPad.Messages;
+﻿using Microsoft.Win32;
+using SongPad.Messages;
 using SongPad.Tools;
 using SongPad.ViewModels;
 using SongPad.Views;
@@ -24,6 +25,23 @@ namespace SongPad.Services
 			view.ShowDialog();
 
 			return viewModel.Result;
+		}
+
+		public IDialogResult ShowSaveFileDialog(string filter, string initialDirectory)
+		{
+			var dialog = new SaveFileDialog();
+
+			dialog.Filter = filter;
+			dialog.InitialDirectory = initialDirectory;
+
+			var result = dialog.ShowDialog();
+
+			return new SaveFileDialogResult(result.Value, dialog.FileName);
+		}
+
+		public void ShowErrorDialog(string error)
+		{
+			MessageBox.Show($"An error has occured:{Environment.NewLine}{error}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 	}
 }
