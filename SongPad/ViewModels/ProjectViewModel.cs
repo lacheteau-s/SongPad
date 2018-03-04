@@ -21,7 +21,7 @@ namespace SongPad.ViewModels
 	{
 		private IEventDispatcher _eventDispatcher;
 		private IDialogService _dialogService;
-		private IExporter _sgpExporter;
+		private ISerializer _sgpSerializer;
 
 		private readonly string PROJECT_FORMAT_FILTER = "SongPad file (*.sgp)|*.sgp";
 
@@ -51,7 +51,7 @@ namespace SongPad.ViewModels
 		{
 			_eventDispatcher = eventDispatcher;
 			_dialogService = dialogService;
-			_sgpExporter = IoC.GetInstance<SgpExporter>();
+			_sgpSerializer = IoC.GetInstance<SgpSerializer>();
 		}
 
 		#region Lifecycle
@@ -134,7 +134,7 @@ namespace SongPad.ViewModels
 			}
 
 			Title = Path.GetFileName(FilePath); // Edit title to match file
-			_sgpExporter.Export(FilePath, this.ToDTO()); // async + try/catch
+			_sgpSerializer.Export(FilePath, this.ToDTO()); // async + try/catch
 
 			HasChanges = false;
 		}

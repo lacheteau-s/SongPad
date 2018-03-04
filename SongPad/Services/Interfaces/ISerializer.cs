@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 
 namespace SongPad.Services
 {
-	public interface IExporter
+	public interface ISerializer
 	{
 		void Export(string path, ProjectDTO project);
+
+		ProjectDTO Import(string path);
 	}
 }

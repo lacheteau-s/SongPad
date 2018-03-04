@@ -21,6 +21,7 @@ namespace SongPad.ViewModels
 	{
 		private IEventDispatcher _eventDispatcher;
 		private IDialogService _dialogService;
+		private ISerializer _sgpSerializer;
 
 		private readonly string PROJECT_FORMAT_FILTER = "SongPad file (*.sgp)|*.sgp";
 
@@ -44,6 +45,7 @@ namespace SongPad.ViewModels
 		{
 			_eventDispatcher = eventDispatcher;
 			_dialogService = dialogService;
+			_sgpSerializer = IoC.GetInstance<SgpSerializer>();
 		}
 
 		#region Lifecycle
@@ -124,18 +126,14 @@ namespace SongPad.ViewModels
 			if (!result.IsOk)
 				return;
 
-			using (var stream = File.OpenRead(result.FilePath))
-			{
-				var serializer = new XmlSerializer(typeof(ProjectDTO));
-				var project = (ProjectDTO)serializer.Deserialize(stream);
-				var vm = IoC.GetInstance<ProjectViewModel>();
+			var project = _sgpSerializer.Import(result.FilePath);
+			var vm = IoC.GetInstance<ProjectViewModel>();
 
-				vm.Initialize(project);
+			vm.Initialize(project);
 
-				Projects.Add(vm);
-				SelectedProject = vm;
-				RaisePropertyChanged(nameof(HasItems));
-			}
+			Projects.Add(vm);
+			SelectedProject = vm;
+			RaisePropertyChanged(nameof(HasItems));
 		}
 
 		private void SaveCurrentProject()
