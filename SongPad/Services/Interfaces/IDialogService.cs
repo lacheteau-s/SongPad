@@ -14,7 +14,9 @@ namespace SongPad.Services
 
 		IDialogResult ShowDialog<T>() where T : DialogViewModelBase;
 
-		IDialogResult ShowSaveFileDialog(string filter, string initialDirectory);
+		IDialogResult SaveFileDialog(string filter, string initialDirectory);
+
+		IDialogResult OpenFileDialog(string filter, string initialDirectory);
 
 		void ShowErrorDialog(string error);
 	}
