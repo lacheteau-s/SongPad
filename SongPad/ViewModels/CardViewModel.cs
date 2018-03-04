@@ -63,6 +63,16 @@ namespace SongPad.ViewModels
 			Lines.Clear();
 		}
 
+		protected override void Subscribe()
+		{
+			PropertyChanged += OnPropertyChanged;
+		}
+
+		protected override void Unsubscribe()
+		{
+			PropertyChanged -= OnPropertyChanged;
+		}
+
 		public void RemoveLines(LineViewModel[] lines)
 		{
 			foreach (var line in lines)
@@ -112,13 +122,19 @@ namespace SongPad.ViewModels
 			line.Line = $"Test {Lines.Count + 1}";
 			Lines.Add(line);
 
-			_eventDispatcher.Invoke<ProjectChangedEvent>();
+			_eventDispatcher.Invoke<ProjectChangedEvent>(); // TODO : should be removed if assigning a default value as above. In which case the line's VM will invoke the event itself.
 		}
 
 		private void OnRemoveCard()
 		{
 			// TODO : Clear lines
 			RemoveEventHandler?.Invoke(this, EventArgs.Empty);
+		}
+
+		private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == nameof(Title))
+				_eventDispatcher.Invoke<ProjectChangedEvent>();
 		}
 	}
 }
