@@ -12,6 +12,8 @@ namespace SongPad.DTO
 {
 	public class ProjectDTO
 	{
+		public string FilePath;
+
 		public string Title;
 
 		public CardDTO[] Cards;

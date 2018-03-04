@@ -1,4 +1,5 @@
-﻿using SongPad.Messages;
+﻿using SongPad.DTO;
+using SongPad.Messages;
 using SongPad.Services;
 using SongPad.Tools;
 using System;
@@ -12,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Xml.Serialization;
 
 namespace SongPad.ViewModels
 {
@@ -122,12 +124,18 @@ namespace SongPad.ViewModels
 			if (!result.IsOk)
 				return;
 
-			var vm = IoC.GetInstance<ProjectViewModel>();
-			vm.Initialize(result.FilePath);
+			using (var stream = File.OpenRead(result.FilePath))
+			{
+				var serializer = new XmlSerializer(typeof(ProjectDTO));
+				var project = (ProjectDTO)serializer.Deserialize(stream);
+				var vm = IoC.GetInstance<ProjectViewModel>();
 
-			Projects.Add(vm);
-			SelectedProject = vm;
-			RaisePropertyChanged(nameof(HasItems));
+				vm.Initialize(project);
+
+				Projects.Add(vm);
+				SelectedProject = vm;
+				RaisePropertyChanged(nameof(HasItems));
+			}
 		}
 
 		private void SaveCurrentProject()

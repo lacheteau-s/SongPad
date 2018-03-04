@@ -25,9 +25,9 @@ namespace SongPad.ViewModels
 
 		private readonly string PROJECT_FORMAT_FILTER = "SongPad file (*.sgp)|*.sgp";
 
-		private string _filePath;
+		public string FilePath { get; set; }
 
-		public bool IsSaved => !string.IsNullOrEmpty(_filePath);
+		public bool IsSaved => !string.IsNullOrEmpty(FilePath);
 
 		private bool _hasChanges;
 
@@ -56,9 +56,21 @@ namespace SongPad.ViewModels
 
 		#region Lifecycle
 
-		public void Initialize(string path)
+		public void Initialize(ProjectDTO dto)
 		{
-			Open(path);
+			FilePath = dto.FilePath;
+			Title = dto.Title;
+			Cards = new ObservableCollection<CardViewModel>(dto.Cards.Select(c =>
+			{
+				var vm = IoC.GetInstance<CardViewModel>();
+
+				vm.Title = c.Title;
+				vm.Initialize(c);
+				vm.RemoveEventHandler += OnRemoveCard;
+
+				return vm;
+
+			}).ToList());
 
 			base.Initialize();
 		}
@@ -118,47 +130,13 @@ namespace SongPad.ViewModels
 				if (!result.IsOk) // Select destination popup
 					return;
 
-				_filePath = result.FilePath; // Fill out project path
+				FilePath = result.FilePath; // Fill out project path
 			}
 
-			Title = Path.GetFileName(_filePath); // Edit title to match file
-			_sgpExporter.Export(_filePath, this.ToDTO()); // async + try/catch
+			Title = Path.GetFileName(FilePath); // Edit title to match file
+			_sgpExporter.Export(FilePath, this.ToDTO()); // async + try/catch
 
 			HasChanges = false;
-		}
-
-		public void Open(string path)
-		{
-			_filePath = path;
-
-			// handle exceptions
-			using (var stream = File.OpenRead(_filePath))
-			{
-				var serializer = new XmlSerializer(typeof(ProjectDTO));
-
-				var project = (ProjectDTO)serializer.Deserialize(stream);
-
-				Title = project.Title;
-				Cards = new ObservableCollection<CardViewModel>(project.Cards.Select(c =>
-				{
-					var card = IoC.GetInstance<CardViewModel>();
-
-					card.Initialize();
-					card.Title = c.Title;
-					card.RemoveEventHandler += OnRemoveCard;
-					card.Lines = new ObservableCollection<LineViewModel>(c.Lines.Select(l =>
-					{
-						var line = IoC.GetInstance<LineViewModel>();
-
-						line.Initialize();
-						line.Line = l;
-
-						return line;
-					}).ToList());
-
-					return card;
-				}).ToList());
-			}
 		}
 
 		private void AddCard()
