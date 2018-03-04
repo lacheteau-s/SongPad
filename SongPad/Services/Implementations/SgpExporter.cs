@@ -17,6 +17,8 @@ namespace SongPad.Services
 		{
 			var backup = BackupIfExists(path); // In case of error: first, make a duplicate of the file
 
+			File.WriteAllText(path, string.Empty);
+
 			using (var stream = File.Open(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
 			{
 				var serializer = new XmlSerializer(typeof(ProjectDTO));
