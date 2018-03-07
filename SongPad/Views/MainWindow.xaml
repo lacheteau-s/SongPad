@@ -53,11 +53,6 @@
 					Template="{StaticResource ImageButton}"
 					Command="{Binding SaveProjectCommand}"
 					ToolTip="Save project" Width="25" Height="25" Margin="2" />
-				<Button Content="{iconPacks:Material ContentSaveAll, Width=16, Height=16}"
-					Foreground="{DynamicResource foreground}"
-					Template="{StaticResource ImageButton}"
-					Command="{Binding SaveAllCommand}"
-					ToolTip="Save all" Width="25" Height="25" Margin="2" />
 				<Button Content="{iconPacks:Material Export, Width=16, Height=16}"
 					Foreground="{DynamicResource foreground}"
 					Template="{StaticResource ImageButton}"

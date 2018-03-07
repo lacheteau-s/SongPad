@@ -17,7 +17,6 @@ namespace SongPad.ViewModels
 		public ICommand NewProjectCommand => new Command(OnNewProject);
 		public ICommand OpenProjectCommand => new Command(OnOpenProject);
 		public ICommand SaveProjectCommand => new Command(OnSaveProject);
-		public ICommand SaveAllCommand => new Command(OnSaveAllProject);
 		public ICommand ExportCommand => new Command(OnExport);
 
 		public ActionMenuViewModel(IEventDispatcher eventDispatcher)
@@ -38,11 +37,6 @@ namespace SongPad.ViewModels
 		private void OnSaveProject()
 		{
 			_eventDispatcher.Invoke(new ProjectEvent(ProjectEvent.InstructionType.Save));
-		}
-
-		private void OnSaveAllProject()
-		{
-
 		}
 
 		private void OnExport()
