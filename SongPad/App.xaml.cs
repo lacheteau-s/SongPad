@@ -13,5 +13,17 @@ namespace SongPad
     /// </summary>
     public partial class App : Application
     {
+		public App()
+		{
+			InitializeComponent();
+			ApplySkin();
+		}
+
+		// https://www.codeproject.com/Articles/19782/Creating-a-Skinned-User-Interface-in-WPF
+		public void ApplySkin()
+		{
+			var skin = LoadComponent(new Uri(@".\Resources\Skins\DarkSkin.xaml", UriKind.Relative)) as ResourceDictionary;
+			Resources.MergedDictionaries.Add(skin);
+		}
     }
 }

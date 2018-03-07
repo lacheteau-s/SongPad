@@ -1,0 +1,76 @@
+﻿<UserControl x:Class="SongPad.Views.CardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:viewModels="clr-namespace:SongPad.ViewModels"
+			 xmlns:controls="clr-namespace:SongPad.Resources.Controls"
+             mc:Ignorable="d"
+			 d:DataContext="{d:DesignInstance viewModels:CardViewModel}"
+             d:DesignHeight="300" d:DesignWidth="300" Background="{DynamicResource controlBackground}">
+	<UserControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/SongPad;component/Resources/Templates/Button.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</UserControl.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="30" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+
+		<!-- HEADER -->
+		<Grid Grid.Row="0" Margin="5,0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="20" />
+				<ColumnDefinition Width="20" />
+				<ColumnDefinition Width="20" />
+			</Grid.ColumnDefinitions>
+			<Label MouseDoubleClick="OnHeaderDoubleClick" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+				<Grid>
+					<TextBlock Text="{Binding Title}"
+						   Visibility="{Binding IsEditingTitle, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"
+						   VerticalAlignment="Center" Foreground="{DynamicResource foreground}" />
+					<TextBox x:Name="HeaderTextBox"
+						 Text="{Binding Title, Mode=TwoWay}"
+						 KeyUp="OnHeaderKeyUp"
+						 Visibility="{Binding IsEditingTitle, Converter={StaticResource BooleanToVisibilityConverter}}"
+						 VerticalContentAlignment="Center">
+					</TextBox>
+				</Grid>
+			</Label>
+			<Button Grid.Column="1" Foreground="{DynamicResource foreground}" Margin="0,5"
+					Command="{Binding AddLineCommand}"
+					Template="{StaticResource ImageButton}"
+					Content="{iconPacks:Material Plus, Width=12, Height=12}" />
+
+			<Button Grid.Column="2" Foreground="{DynamicResource foreground}" Margin="0,5"
+					Template="{StaticResource ImageButton}"
+					Content="{iconPacks:Material LockOpen, Width=12, Height=12}" />
+
+			<Button Grid.Column="3" Foreground="{DynamicResource foreground}" Margin="0,5"
+					Command="{Binding RemoveCardCommand}"
+					Template="{StaticResource ImageButton}"
+					Content="{iconPacks:Material Delete, Width=12, Height=12}" />
+
+		</Grid>
+		
+		<!-- CONTENT -->
+		<ListBox x:Name="listBox" Grid.Row="1" ItemsSource="{Binding Lines}" SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Disabled" KeyUp="OnListBoxKeyUp">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel IsItemsHost="True" Orientation="Vertical" />
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<controls:EditableLabel Text="{Binding Line, Mode=TwoWay}" />
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ListBox>
+	</Grid>
+</UserControl>

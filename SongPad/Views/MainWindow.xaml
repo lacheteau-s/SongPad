@@ -1,0 +1,82 @@
+﻿<Window x:Class="SongPad.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:converters="clr-namespace:SongPad.Converters"
+		xmlns:views="clr-namespace:SongPad.Views"
+		xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        mc:Ignorable="d"
+		DataContext="{StaticResource ResourceKey=MainWindowViewModel}"
+		Template="{DynamicResource WindowTemplate}"
+		Style="{DynamicResource WindowStyle}"
+		Title="{Binding Title}"
+		Icon="/SongPad;component/Resources/SongPad.ico">
+	<Window.Resources>
+		<converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+	</Window.Resources>
+	<DockPanel>
+		<!--<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>-->
+		<Border DockPanel.Dock="Top" Background="{DynamicResource ResourceKey=controlBackground}" BorderThickness="1,1,1,0" BorderBrush="{DynamicResource borderColor}">
+			<Menu DataContext="{Binding MenuViewModel}" Background="Transparent" Margin="0,6">
+				<MenuItem Header="_File" Foreground="{DynamicResource foreground}">
+					<MenuItem Header="_New" Command="{Binding NewCommand}" Foreground="{DynamicResource foregroundInverse}" />
+					<MenuItem Header="_Open" Command="{Binding OpenCommand}" Foreground="{DynamicResource foregroundInverse}" />
+					<MenuItem Header="_Save" Command="{Binding SaveCommand}" Foreground="{DynamicResource foregroundInverse}" />
+					<Separator />
+					<MenuItem Header="_Quit" Command="{Binding QuitCommand}" Foreground="{DynamicResource foregroundInverse}" />
+				</MenuItem>
+			</Menu>
+		</Border>
+
+		<!-- TOP TOOLBAR -->
+		<Border DockPanel.Dock="Top"
+				Background="{DynamicResource controlBackground}"
+				BorderThickness="1" BorderBrush="{DynamicResource borderColor}"
+				DataContext="{Binding ActionMenuViewModel}">
+			<StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+				<Button Content="{iconPacks:Material FolderPlus, Width=16, Height=16}"
+					Foreground="{DynamicResource foreground}"
+					Template="{StaticResource ImageButton}"
+					Command="{Binding NewProjectCommand}"
+					ToolTip="New project" Width="25" Height="25" Margin="2" />
+				<Button Content="{iconPacks:Material FolderOpen, Width=16, Height=16}"
+					Foreground="{DynamicResource foreground}"
+					Template="{StaticResource ImageButton}"
+					Command="{Binding OpenProjectCommand}"
+					ToolTip="Open project" Width="25" Height="25" Margin="2" />
+				<Button Content="{iconPacks:Material ContentSave, Width=16, Height=16}"
+					Foreground="{DynamicResource foreground}"
+					Template="{StaticResource ImageButton}"
+					Command="{Binding SaveProjectCommand}"
+					ToolTip="Save project" Width="25" Height="25" Margin="2" />
+				<Button Content="{iconPacks:Material Export, Width=16, Height=16}"
+					Foreground="{DynamicResource foreground}"
+					Template="{StaticResource ImageButton}"
+					Command="{Binding ExportCommand}"
+					ToolTip="Save all" Width="25" Height="25" Margin="2" />
+			</StackPanel>
+		</Border>
+
+		<!-- TOOLBAR -->
+		<Border DockPanel.Dock="Left" BorderThickness="1" BorderBrush="{DynamicResource borderColor}">
+			<ToolBarTray Orientation="Vertical" Background="{DynamicResource controlBackground}">
+				<ToolBar Background="Transparent" DataContext="{Binding ToolBarViewModel}">
+					<Button Content="{iconPacks:Material FilePlus, Width=16, Height=16}"
+							Foreground="{DynamicResource foreground}"
+							Template="{StaticResource ImageButton}"
+							Command="{Binding AddCardCommand}"
+							ToolTip="Add new card" Width="25" Height="25" Margin="2" />
+				</ToolBar>
+			</ToolBarTray>
+		</Border>
+
+		<!-- Content area -->
+		<Grid>
+			<views:WorkspaceView DataContext="{Binding WorkspaceViewModel}" Visibility="{Binding HasItems, Converter={StaticResource BooleanToVisibilityConverter}}" />
+		</Grid>
+    </DockPanel>
+</Window>
