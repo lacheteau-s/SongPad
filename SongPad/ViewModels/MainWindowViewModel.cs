@@ -35,6 +35,8 @@ namespace SongPad.ViewModels
 
 		public ToolBarViewModel ToolBarViewModel { get; private set; }
 
+		public CardsToolboxViewModel CardsToolboxViewModel { get; private set; }
+
 		public WorkspaceViewModel WorkspaceViewModel { get; private set; }
 
 		public ICommand CloseCommand => new Command(Close);
@@ -48,6 +50,7 @@ namespace SongPad.ViewModels
 			MenuViewModel = IoC.GetInstance<MenuViewModel>();
 			ActionMenuViewModel = IoC.GetInstance<ActionMenuViewModel>();
 			ToolBarViewModel = IoC.GetInstance<ToolBarViewModel>();
+			CardsToolboxViewModel = IoC.GetInstance<CardsToolboxViewModel>();
 			WorkspaceViewModel = IoC.GetInstance<WorkspaceViewModel>();
 		}
 
@@ -56,6 +59,7 @@ namespace SongPad.ViewModels
 			MenuViewModel.Initialize();
 			ActionMenuViewModel.Initialize();
 			ToolBarViewModel.Initialize();
+			CardsToolboxViewModel.Initialize();
 			WorkspaceViewModel.Initialize();
 
 			base.Initialize();
@@ -68,6 +72,7 @@ namespace SongPad.ViewModels
 			MenuViewModel.Cleanup();
 			ActionMenuViewModel.Cleanup();
 			ToolBarViewModel.Cleanup();
+			CardsToolboxViewModel.Cleanup();
 			WorkspaceViewModel.Cleanup();
 		}
 

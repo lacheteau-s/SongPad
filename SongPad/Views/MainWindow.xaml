@@ -74,6 +74,14 @@
 			</ToolBarTray>
 		</Border>
 
+		<Border DockPanel.Dock="Right" BorderThickness="1" BorderBrush="{DynamicResource borderColor}">
+			<ToolBarTray Orientation="Vertical" Background="{DynamicResource controlBackground}">
+				<ToolBar Background="Transparent">
+					<views:CardsToolboxView DataContext="{Binding CardsToolboxViewModel}" Width="150" Height="150" />
+				</ToolBar>
+			</ToolBarTray>
+		</Border>
+
 		<!-- Content area -->
 		<Grid>
 			<views:WorkspaceView DataContext="{Binding WorkspaceViewModel}" Visibility="{Binding HasItems, Converter={StaticResource BooleanToVisibilityConverter}}" />

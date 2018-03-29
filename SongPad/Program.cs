@@ -31,6 +31,8 @@ namespace SongPad
 
 			IoC.Register<ToolBarViewModel>();
 
+			IoC.Register<CardsToolboxViewModel>();
+
 			IoC.Register<WorkspaceViewModel>();
 
 			IoC.Register<ProjectViewModel>();

@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Helpers\DTOHelper.cs" />
+    <Compile Include="Messages\CardsCollectionChangedEvent.cs" />
     <Compile Include="Messages\EmptyEvents.cs" />
     <Compile Include="Messages\ProjectEvent.cs" />
     <Compile Include="DTO\CardDTO.cs" />
@@ -81,11 +82,15 @@
     <Compile Include="Tools\ObservableObject.cs" />
     <Compile Include="Tools\SystemMenuManager.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\CardsToolboxViewModel.cs" />
     <Compile Include="ViewModels\CardViewModel.cs" />
     <Compile Include="ViewModels\LineViewModel.cs" />
     <Compile Include="ViewModels\ToolBarViewModel.cs" />
     <Compile Include="ViewModels\ActionMenuViewModel.cs" />
     <Compile Include="ViewModels\WorkspaceViewModel.cs" />
+    <Compile Include="Views\CardsToolboxView.xaml.cs">
+      <DependentUpon>CardsToolboxView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CardView.xaml.cs">
       <DependentUpon>CardView.xaml</DependentUpon>
     </Compile>
@@ -143,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Templates\Window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CardsToolboxView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
