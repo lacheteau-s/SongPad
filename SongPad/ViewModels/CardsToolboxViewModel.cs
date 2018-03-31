@@ -2,6 +2,7 @@
 using SongPad.Services;
 using SongPad.Tools;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -18,9 +19,13 @@ namespace SongPad.ViewModels
 
 		public ObservableCollection<CardViewModel> Cards { get; set; } // TODO: cleanup
 
+		public List<CardViewModel> SelectedCards { get; set; }
+
 		public bool HasItems => Cards?.Count > 0;
 
 		public ICommand AddCardCommand => new Command(OnAddCard);
+
+		public ICommand RemoveCardsCommand => new Command(RemoveSelectedCards);
 
 		public CardsToolboxViewModel(IEventDispatcher eventDispatcher)
 		{
@@ -41,9 +46,20 @@ namespace SongPad.ViewModels
 			_eventDispatcher.Unsubscribe<ProjectLoadedEvent>(this);
 		}
 
-		public void RemoveCards(CardViewModel[] cards)
+		public void UpdateSelection(IList addedItems, IList removedItems)
 		{
-			foreach (var card in cards)
+			if (addedItems != null)
+				foreach (var item in addedItems)
+					SelectedCards.Add((CardViewModel)item);
+
+			if (removedItems != null)
+				foreach (var item in removedItems)
+					SelectedCards.Remove((CardViewModel)item);
+		}
+
+		public void RemoveSelectedCards()
+		{
+			foreach (var card in SelectedCards.ToList())
 				Cards.Remove(card); // Project handles the cleanup when receiving the CollectionChanged event
 		}
 
@@ -51,6 +67,9 @@ namespace SongPad.ViewModels
 		{
 			Cards = (ObservableCollection<CardViewModel>)evt.Cards;
 			RaisePropertyChanged(nameof(Cards));
+
+			SelectedCards = new List<CardViewModel>();
+			RaisePropertyChanged(nameof(SelectedCards));
 		}
 
 		private void OnAddCard()

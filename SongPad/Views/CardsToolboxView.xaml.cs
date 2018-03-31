@@ -31,12 +31,12 @@ namespace SongPad.Views
 		private void OnListBoxKeyUp(object sender, KeyEventArgs e)
 		{
 			if (e.Key == Key.Delete)
-			{
-				var listbox = (ListBox)sender;
-				var selection = listbox.SelectedItems.Cast<CardViewModel>().ToArray();
+				viewModel.RemoveSelectedCards();
+		}
 
-				viewModel.RemoveCards(selection);
-			}
+		private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			viewModel.UpdateSelection(e.AddedItems, e.RemovedItems);
 		}
 	}
 }
