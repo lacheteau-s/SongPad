@@ -1,5 +1,6 @@
 ﻿using SongPad.Messages;
 using SongPad.Services;
+using SongPad.Tools;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,6 +8,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace SongPad.ViewModels
 {
@@ -17,6 +19,8 @@ namespace SongPad.ViewModels
 		public ObservableCollection<CardViewModel> Cards { get; set; } // TODO: cleanup
 
 		public bool HasItems => Cards?.Count > 0;
+
+		public ICommand AddCardCommand => new Command(OnAddCard);
 
 		public CardsToolboxViewModel(IEventDispatcher eventDispatcher)
 		{
@@ -47,6 +51,14 @@ namespace SongPad.ViewModels
 		{
 			Cards = (ObservableCollection<CardViewModel>)evt.Cards;
 			RaisePropertyChanged(nameof(Cards));
+		}
+
+		private void OnAddCard()
+		{
+			var card = IoC.GetInstance<CardViewModel>();
+
+			card.Initialize();
+			Cards.Add(card);
 		}
 	}
 }

@@ -151,14 +151,12 @@ namespace SongPad.ViewModels
 			var card = IoC.GetInstance<CardViewModel>();
 
 			card.Initialize();
-			card.RemoveEventHandler += OnRemoveCard;
 			Cards.Add(card);
 		}
 
 		private void OnAddCard(AddCardEvent message)
 		{
 			AddCard();
-			HasChanges = true;
 		}
 
 		private void OnRemoveCard(object sender, EventArgs e)
@@ -179,6 +177,9 @@ namespace SongPad.ViewModels
 					card.RemoveEventHandler -= OnRemoveCard;
 					card.Cleanup();
 				}
+			else if (e.NewItems != null)
+				foreach (CardViewModel card in e.NewItems)
+					card.RemoveEventHandler += OnRemoveCard;
 
 			HasChanges = true;
 		}

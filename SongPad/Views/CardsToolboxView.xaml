@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
 			 xmlns:controls="clr-namespace:SongPad.Resources.Controls"
 			 xmlns:local="clr-namespace:SongPad.Views"
              mc:Ignorable="d" 
@@ -11,6 +12,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<TextBlock Grid.Row="0" Text="Cards" Foreground="{DynamicResource foreground}" />
 		<ListBox Grid.Row="1" ItemsSource="{Binding Cards}" SelectionMode="Multiple" KeyUp="OnListBoxKeyUp">
@@ -22,5 +24,11 @@
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
+		<StackPanel Grid.Row="2" Orientation="Horizontal">
+			<Button Foreground="{DynamicResource foreground}"
+					Command="{Binding AddCardCommand}"
+					Template="{StaticResource ImageButton}"
+					Content="{iconPacks:Material Plus, Width=12, Height=12}"/>
+		</StackPanel>
 	</Grid>
 </UserControl>
