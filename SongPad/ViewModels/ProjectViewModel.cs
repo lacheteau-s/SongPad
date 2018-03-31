@@ -103,6 +103,8 @@ namespace SongPad.ViewModels
 			foreach (var card in Cards)
 				card.RemoveEventHandler += OnRemoveCard;
 
+			Cards.CollectionChanged += OnCardsCollectionChanged;
+
 			_eventDispatcher.Subscribe<AddCardEvent>(this, OnAddCard);
 			_eventDispatcher.Subscribe<ProjectChangedEvent>(this, OnChange);
 		}
@@ -113,6 +115,8 @@ namespace SongPad.ViewModels
 
 			foreach (var card in Cards)
 				card.RemoveEventHandler -= OnRemoveCard;
+
+			Cards.CollectionChanged -= OnCardsCollectionChanged;
 
 			_eventDispatcher.Unsubscribe<AddCardEvent>(this);
 			_eventDispatcher.Unsubscribe<ProjectChangedEvent>(this);
@@ -151,13 +155,6 @@ namespace SongPad.ViewModels
 			Cards.Add(card);
 		}
 
-		private void RemoveCard(CardViewModel card)
-		{
-			card.RemoveEventHandler -= OnRemoveCard;
-			card.Cleanup();
-			Cards.Remove(card);
-		}
-
 		private void OnAddCard(AddCardEvent message)
 		{
 			AddCard();
@@ -166,12 +163,23 @@ namespace SongPad.ViewModels
 
 		private void OnRemoveCard(object sender, EventArgs e)
 		{
-			RemoveCard((CardViewModel)sender);
-			HasChanges = true;
+			Cards.Remove((CardViewModel)sender);
 		}
 
 		private void OnChange(ProjectChangedEvent evt)
 		{
+			HasChanges = true;
+		}
+
+		private void OnCardsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		{
+			if (e.OldItems != null)
+				foreach (CardViewModel card in e.OldItems)
+				{
+					card.RemoveEventHandler -= OnRemoveCard;
+					card.Cleanup();
+				}
+
 			HasChanges = true;
 		}
 

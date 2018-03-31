@@ -3,6 +3,7 @@ using SongPad.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +35,12 @@ namespace SongPad.ViewModels
 			base.Unsubscribe();
 
 			_eventDispatcher.Unsubscribe<ProjectLoadedEvent>(this);
+		}
+
+		public void RemoveCards(CardViewModel[] cards)
+		{
+			foreach (var card in cards)
+				Cards.Remove(card); // Project handles the cleanup when receiving the CollectionChanged event
 		}
 
 		private void OnProjectLoaded(ProjectLoadedEvent evt)

@@ -13,7 +13,7 @@
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 		<TextBlock Grid.Row="0" Text="Cards" Foreground="{DynamicResource foreground}" />
-		<ListBox Grid.Row="1" ItemsSource="{Binding Cards}">
+		<ListBox Grid.Row="1" ItemsSource="{Binding Cards}" SelectionMode="Multiple" KeyUp="OnListBoxKeyUp">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<Grid>

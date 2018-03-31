@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SongPad.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,22 @@ namespace SongPad.Views
 	/// </summary>
 	public partial class CardsToolboxView : UserControl
 	{
+		private CardsToolboxViewModel viewModel => (CardsToolboxViewModel)DataContext;
+
 		public CardsToolboxView()
 		{
 			InitializeComponent();
+		}
+
+		private void OnListBoxKeyUp(object sender, KeyEventArgs e)
+		{
+			if (e.Key == Key.Delete)
+			{
+				var listbox = (ListBox)sender;
+				var selection = listbox.SelectedItems.Cast<CardViewModel>().ToArray();
+
+				viewModel.RemoveCards(selection);
+			}
 		}
 	}
 }
