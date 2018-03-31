@@ -13,7 +13,7 @@ namespace SongPad.ViewModels
 	{
 		private readonly IEventDispatcher _eventDispatcher;
 
-		public ObservableCollection<CardViewModel> Cards { get; set; }
+		public ObservableCollection<CardViewModel> Cards { get; set; } // TODO: cleanup
 
 		public bool HasItems => Cards?.Count > 0;
 
@@ -22,37 +22,24 @@ namespace SongPad.ViewModels
 			_eventDispatcher = eventDispatcher;
 		}
 
-		public override void Initialize()
-		{
-			Cards = new ObservableCollection<CardViewModel>();
-
-			base.Initialize();
-		}
-
 		protected override void Subscribe()
 		{
 			base.Subscribe();
 
-			_eventDispatcher.Subscribe<CardsCollectionChangedEvent>(this, OnCardsCollectionChanged);
+			_eventDispatcher.Subscribe<ProjectLoadedEvent>(this, OnProjectLoaded);
 		}
 
 		protected override void Unsubscribe()
 		{
 			base.Unsubscribe();
 
-			_eventDispatcher.Unsubscribe<CardsCollectionChangedEvent>(this);
+			_eventDispatcher.Unsubscribe<ProjectLoadedEvent>(this);
 		}
 
-		private void OnCardsCollectionChanged(CardsCollectionChangedEvent evt)
+		private void OnProjectLoaded(ProjectLoadedEvent evt)
 		{
-			var dict = new Dictionary<CardsCollectionChangedEvent.InstructionType, Action<CardViewModel>>
-			{
-				{ CardsCollectionChangedEvent.InstructionType.Added, (x) => Cards.Add(x) },
-				{ CardsCollectionChangedEvent.InstructionType.Removed, (x) => Cards.Remove(x) }
-			};
-
-			foreach (var item in evt.Items)
-				dict[evt.Instruction]((CardViewModel)item);
+			Cards = (ObservableCollection<CardViewModel>)evt.Cards;
+			RaisePropertyChanged(nameof(Cards));
 		}
 	}
 }

@@ -61,11 +61,11 @@
   <ItemGroup>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Helpers\DTOHelper.cs" />
-    <Compile Include="Messages\CardsCollectionChangedEvent.cs" />
     <Compile Include="Messages\EmptyEvents.cs" />
     <Compile Include="Messages\ProjectEvent.cs" />
     <Compile Include="DTO\CardDTO.cs" />
     <Compile Include="DTO\ProjectDTO.cs" />
+    <Compile Include="Messages\ProjectLoadedEvent.cs" />
     <Compile Include="Resources\Behaviors\DoubleClickBehavior.cs" />
     <Compile Include="Resources\Behaviors\DragBehavior.cs" />
     <Compile Include="Resources\Behaviors\ResizeBehavior.cs" />

@@ -79,10 +79,11 @@ namespace SongPad.ViewModels
 		public override void Initialize()
 		{
 			Cards = new ObservableCollection<CardViewModel>();
+			AddCard();
 
 			base.Initialize();
 
-			AddCard(); // This is so the Cards.CollectionChanged event is invoked
+			_eventDispatcher.Invoke(new ProjectLoadedEvent(Cards));
 		}
 
 		public override void Cleanup()
@@ -102,8 +103,6 @@ namespace SongPad.ViewModels
 			foreach (var card in Cards)
 				card.RemoveEventHandler += OnRemoveCard;
 
-			Cards.CollectionChanged += OnCardsCollectionChanged;
-
 			_eventDispatcher.Subscribe<AddCardEvent>(this, OnAddCard);
 			_eventDispatcher.Subscribe<ProjectChangedEvent>(this, OnChange);
 		}
@@ -114,8 +113,6 @@ namespace SongPad.ViewModels
 
 			foreach (var card in Cards)
 				card.RemoveEventHandler -= OnRemoveCard;
-
-			Cards.CollectionChanged -= OnCardsCollectionChanged;
 
 			_eventDispatcher.Unsubscribe<AddCardEvent>(this);
 			_eventDispatcher.Unsubscribe<ProjectChangedEvent>(this);
@@ -171,11 +168,6 @@ namespace SongPad.ViewModels
 		{
 			RemoveCard((CardViewModel)sender);
 			HasChanges = true;
-		}
-
-		private void OnCardsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-		{
-			_eventDispatcher.Invoke(new CardsCollectionChangedEvent(e));
 		}
 
 		private void OnChange(ProjectChangedEvent evt)
