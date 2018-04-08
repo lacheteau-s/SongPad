@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SongPad.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,15 @@ namespace SongPad.Views
 		public WorkspaceView()
 		{
 			InitializeComponent();
+		}
+
+		private void ProjectSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (e.RemovedItems.Count > 0)
+				((ProjectViewModel)e.RemovedItems[0]).SetActive(false);
+
+			if (e.AddedItems.Count > 0)
+				((ProjectViewModel)e.AddedItems[0]).SetActive(true);
 		}
 	}
 }

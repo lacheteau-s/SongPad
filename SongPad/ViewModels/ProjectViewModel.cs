@@ -18,13 +18,15 @@ using System.Collections.Specialized;
 
 namespace SongPad.ViewModels
 {
-	public class ProjectViewModel : BaseViewModel
+	public class ProjectViewModel : BaseViewModel, IActive
 	{
 		private IEventDispatcher _eventDispatcher;
 		private IDialogService _dialogService;
 		private ISerializer _sgpSerializer;
 
 		private readonly string PROJECT_FORMAT_FILTER = "SongPad file (*.sgp)|*.sgp";
+
+		public bool IsActive { get; private set; }
 
 		public string FilePath { get; set; }
 
@@ -72,6 +74,7 @@ namespace SongPad.ViewModels
 				return vm;
 
 			}).ToList());
+			IsActive = true;
 
 			base.Initialize();
 		}
@@ -84,6 +87,7 @@ namespace SongPad.ViewModels
 			base.Initialize();
 
 			_eventDispatcher.Invoke(new ProjectLoadedEvent(Cards));
+			IsActive = true;
 		}
 
 		public override void Cleanup()
@@ -123,6 +127,19 @@ namespace SongPad.ViewModels
 		}
 
 		#endregion
+
+		public void SetActive(bool isActive)
+		{
+			if (isActive && !IsActive)
+			{
+				Subscribe();
+				_eventDispatcher.Invoke(new ProjectLoadedEvent(Cards)); // TODO: perhaps rename event
+			}
+			else if (!isActive)
+				Unsubscribe();
+
+			IsActive = isActive;
+		}
 
 		public void Save()
 		{

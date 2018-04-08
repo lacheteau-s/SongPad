@@ -79,6 +79,7 @@
     <Compile Include="Services\Implementations\SgpSerializer.cs" />
     <Compile Include="Services\Interfaces\IEventDispatcher.cs" />
     <Compile Include="Services\Interfaces\ISerializer.cs" />
+    <Compile Include="Tools\IActive.cs" />
     <Compile Include="Tools\ObservableObject.cs" />
     <Compile Include="Tools\SystemMenuManager.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />

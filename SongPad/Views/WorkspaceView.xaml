@@ -21,7 +21,7 @@
 		</ResourceDictionary>
 	</UserControl.Resources>
 	<Grid>
-		<TabControl ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject, Mode=TwoWay}" Visibility="{Binding SelectedProject, Converter={StaticResource NullToVisibilityConverter}}">
+		<TabControl ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject, Mode=TwoWay}" Visibility="{Binding SelectedProject, Converter={StaticResource NullToVisibilityConverter}}" SelectionChanged="ProjectSelectionChanged">
 			<TabControl.Style>
 				<Style TargetType="TabControl">
 					<Setter Property="Template">
